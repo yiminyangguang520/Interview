@@ -1,0 +1,12 @@
+#ifndef GLDMASKBOX_GLOBAL_H
+#define GLDMASKBOX_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+
+#ifdef GLDMASKBOX_LIB
+# define GLDMASKBOX_EXPORT Q_DECL_EXPORT
+#else
+# define GLDMASKBOX_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // GLDMASKBOX_GLOBAL_H
