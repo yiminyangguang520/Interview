@@ -1,25 +1,32 @@
 #pragma once
 
+#include "GLDMaskBox.h"
+
 #include <QHash>
 #include <QObject>
 #include <QStringList>
+#include <QtXml/QDomElement>
 
-class GLDMaskBox;
-
-class GLDMaskBoxFactory : public QObject
+namespace GlodonMask
 {
-    Q_OBJECT
+    class GLDMaskBoxFactory : public QObject
+    {
+        Q_OBJECT
 
-public:
-    static void initialize(const QString& xmlPath);
+    public:
+        void initialize(const QString& xmlPath);
 
-protected:
-    GLDMaskBoxFactory(QObject* parent = nullptr);
-    virtual ~GLDMaskBoxFactory();
+    protected:
+        GLDMaskBoxFactory(QObject* parent = nullptr);
+        virtual ~GLDMaskBoxFactory();
 
-private:
-    QStringList parseIniFile(const QString& iniPath);
+    private:
+        void parseXML(const QString& xmlPath);
+        GLDMaskBox parseNodeItem(QDomElement &element);
+        GLDGuideInfoItem parseTipNodeItem(QDomElement &element);
+        void parseIniFile(const QString& iniPath, QStringList& shownMaskBoxIDList);
 
-private:
-    QHash<QString, GLDMaskBox> m_maskBoxHash;
-};
+    private:
+        QHash<QString, GLDMaskBox> m_maskBoxHash;
+    };
+}
