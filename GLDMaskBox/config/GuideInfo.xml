@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GLDMaskBoxs>
+    <GLDMaskBox id = "M1">
+        <tip order = "1">
+            <hint  name="hint"  width="305"  height="511" normalimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/target.png"/>
+            <close name="close" width="30"   height="30"  normalimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/close-normal.png" hoverimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/close-hover.png" pressedimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/close-pressed.png" leftXpos="255" leftYpos="255"/>
+            <next  name="next"  width="128"  height="38"  normalimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/next-normal.png"  hoverimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/next-hover.png"  pressedimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/next-pressed.png" leftXpos="89" leftYpos="445"/>
+        </tip>
+
+        <tip order = "2">
+            <hint   name="hint"  width="507"   height="511" normalimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/next.png"/>
+            <close  name="close" width="30"    height="30"  normalimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/close-normal.png" hoverimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/close-hover.png" pressedimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/close-pressed.png" leftXpos="455" leftYpos="255"/>
+            <next   name="next"  width="128"   height="38"  normalimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/try-normal.png"   hoverimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/try-hover.png"   pressedimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/try-pressed.png"   leftXpos="295" leftYpos="446"/>
+        </tip>
+    </GLDMaskBox>
+    <GLDMaskBox id = "M2">
+        <tip order = "1">
+            <hint  name="hint"  width="305"  height="511" normalimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/target.png"/>
+            <close name="close" width="30"   height="30"  normalimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/close-normal.png" hoverimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/close-hover.png" pressedimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/close-pressed.png" leftXpos="255" leftYpos="255"/>
+            <next  name="next"  width="128"  height="38"  normalimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/next-normal.png"  hoverimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/next-hover.png"  pressedimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/next-pressed.png" leftXpos="89" leftYpos="445"/>
+        </tip>
+
+        <tip order = "2">
+            <hint   name="hint"  width="507"   height="511" normalimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/next.png"/>
+            <close  name="close" width="30"    height="30"  normalimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/close-normal.png" hoverimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/close-hover.png" pressedimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/close-pressed.png" leftXpos="455" leftYpos="255"/>
+            <next   name="next"  width="128"   height="38"  normalimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/try-normal.png"   hoverimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/try-hover.png"   pressedimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/try-pressed.png"   leftXpos="295" leftYpos="446"/>
+        </tip>
+    </GLDMaskBox>
+</GLDMaskBoxs>
