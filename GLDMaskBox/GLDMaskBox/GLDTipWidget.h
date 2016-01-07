@@ -46,8 +46,8 @@ namespace GlodonMask
         }
 
         GLDGuideInfo(GLDGuideInfoItem maskWidgetItem,
-            GLDGuideInfoItem nextButtonItem,
-            GLDGuideInfoItem closeButtonItem)
+                     GLDGuideInfoItem nextButtonItem,
+                     GLDGuideInfoItem closeButtonItem)
             : m_maskWidgetItem(maskWidgetItem)
             , m_nextButtonItem(nextButtonItem)
             , m_closeButtonItem(closeButtonItem)
@@ -55,7 +55,7 @@ namespace GlodonMask
 
         }
 
-        GLDGuideInfoItem m_maskWidgetItem;    // 蒙版
+        GLDGuideInfoItem m_maskWidgetItem;    // 提示信息
         GLDGuideInfoItem m_nextButtonItem;    // 下一步
         GLDGuideInfoItem m_closeButtonItem;   // 关闭
     };

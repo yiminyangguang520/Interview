@@ -9,24 +9,32 @@
 
 namespace GlodonMask
 {
-    class GLDMaskBoxFactory : public QObject
+    class GLDMASKBOX_EXPORT GLDMaskBoxFactory : public QObject
     {
         Q_OBJECT
 
     public:
         void initialize(const QString& xmlPath);
+        void showMasks(const QString& id, QList<QWidget*> &wgtList);
+        void showMasks(const QString& id, QList<QAction*> &actList);
 
-    protected:
+    public:
         GLDMaskBoxFactory(QObject* parent = nullptr);
         virtual ~GLDMaskBoxFactory();
 
     private:
         void parseXML(const QString& xmlPath);
-        GLDMaskBox parseNodeItem(QDomElement &element);
-        GLDGuideInfoItem parseTipNodeItem(QDomElement &element);
+
+        void doParseMaskBoxTipInfos(QDomNodeList &tipList, QList<GLDGuideInfo> &guideInfoList);
+
+        GLDGuideInfoItem doParseTipInfoItem(QDomElement &element);
+
         void parseIniFile(const QString& iniPath, QStringList& shownMaskBoxIDList);
 
+        void menuToBtn(QList<QWidget*> & wgtList);
+        QList<QWidget*> actionToBtn(QList<QAction*> & actList);
+
     private:
-        QHash<QString, GLDMaskBox> m_maskBoxHash;
+        QHash<QString, GLDMaskBox*> m_maskBoxHash;
     };
 }

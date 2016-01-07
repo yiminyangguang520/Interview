@@ -1,5 +1,4 @@
 #include "GLDMaskBox.h"
-#include "GLDGetSystemParams.h"
 
 #include <QFile>
 #include <QMenu>
@@ -22,6 +21,18 @@ namespace GlodonMask
             QList<QWidget*> wgtList = actToWidget(actList);
 
             init(wgtList, xmlPath, iniPath);
+        }
+
+        InnerMaskBoxImpl(const QString & id, const QList<GLDGuideInfo> & guideInfoList)
+            : m_step(0)
+            , m_maskBoxID(id)
+            , m_bIsShown(false)
+        {
+            foreach(GLDGuideInfo guideInfo, guideInfoList)
+            {
+                NEXTCLICKEDCALLBACK next = std::bind(&GLDMaskBox::InnerMaskBoxImpl::onNextBtnClicked, this);
+                m_tipWgtList.append(new GLDTipWidget(guideInfo, next));
+            }
         }
 
         ~InnerMaskBoxImpl()
@@ -76,7 +87,10 @@ namespace GlodonMask
 
 
         int                     m_step;           // 第几个蒙版
-        QList<GLDMask*>      m_maskBoxList;    // 蒙版列表
+        QList<GLDMask*>         m_maskList;       // 蒙版列表
+        QString                 m_maskBoxID;
+        QList<GLDTipWidget*>    m_tipWgtList;
+        bool                    m_bIsShown;       // MaskBox里的Mask是否已显示过
 
     private:
         Q_DISABLE_COPY(InnerMaskBoxImpl)
@@ -130,7 +144,7 @@ namespace GlodonMask
                 pTip->setIniPath(iniPath);
             }
 
-            m_maskBoxList.append(pTip);
+            m_maskList.append(pTip);
         }
     }
 
@@ -226,19 +240,19 @@ namespace GlodonMask
         if (element.hasAttribute("normalimage"))
         {
             normalImage = element.attributeNode("normalimage").value();
-            replaceAllParams(normalImage);
+            //replaceAllParams(normalImage);
         }
 
         if (element.hasAttribute("hoverimage"))
         {
             hoverImage = element.attributeNode("hoverimage").value();
-            replaceAllParams(hoverImage);
+            //replaceAllParams(hoverImage);
         }
 
         if (element.hasAttribute("pressedimage"))
         {
             pressedImage = element.attributeNode("pressedimage").value();
-            replaceAllParams(pressedImage);
+            //replaceAllParams(pressedImage);
         }
 
         if (element.hasAttribute("leftXpos"))
@@ -257,19 +271,19 @@ namespace GlodonMask
 
     void GLDMaskBox::InnerMaskBoxImpl::onNextBtnClicked()
     {
-        if (m_step == m_maskBoxList.count() - 1)
+        if (m_step == m_maskList.count() - 1)
         {
-            m_maskBoxList[m_step]->slotClose();
+            m_maskList[m_step]->slotClose();
             return;
         }
         else
         {
-            m_maskBoxList[m_step]->close();
+            m_maskList[m_step]->close();
         }
 
         m_step++;
-        m_maskBoxList[m_step]->show();
-        m_maskBoxList[m_step]->raise();
+        m_maskList[m_step]->show();
+        m_maskList[m_step]->raise();
     }
 
     QList<QWidget* > GLDMaskBox::InnerMaskBoxImpl::actToWidget(QList<QAction* > actList)
@@ -299,12 +313,35 @@ namespace GlodonMask
     GLDMaskBox::GLDMaskBox(QList<QAction*> actList, const QString & xmlPath, const QString & iniPath)
         : d(new InnerMaskBoxImpl(actList, xmlPath, iniPath))
     {
-        setParent(topLevelParentWidget(d->m_maskBoxList.at(0)->getClipedWidget()));
+        setParent(topLevelParentWidget(d->m_maskList.at(0)->getClipedWidget()));
+    }
+
+    GLDMaskBox::GLDMaskBox(const QString & id, const QList<GLDGuideInfo> & guideInfoList)
+        : d(new InnerMaskBoxImpl(id, guideInfoList))
+    {
+
     }
 
     GLDMaskBox::~GLDMaskBox()
     {
 
+    }
+
+    void GLDMaskBox::setMaskedWgts(QList<QWidget*> & wgtList)
+    {
+        Q_ASSERT(wgtList.size() == d->m_tipWgtList.size());
+
+        GLDMask* pMask = nullptr;
+
+        for (int index = 0; index < wgtList.count(); ++index)
+        {
+            pMask = new GLDMask(wgtList[index], d->m_tipWgtList[index], index, topLevelParentWidget(wgtList[index]));
+            pMask->hide();
+
+            d->m_maskList.append(pMask);
+        }
+
+        connect(pMask, &GLDMask::alreadyShow, this, &GLDMaskBox::setAllMaskShown);
     }
 
     void GLDMaskBox::setMaskColor(GLDMask::MASKCOLOR color)
@@ -313,7 +350,7 @@ namespace GlodonMask
 
         for (int index = 0; index < num; ++index)
         {
-            d->m_maskBoxList[index]->setMaskColor(color);
+            d->m_maskList[index]->setMaskColor(color);
         }
     }
 
@@ -323,7 +360,7 @@ namespace GlodonMask
 
         for (int index = 0; index < num; ++index)
         {
-            d->m_maskBoxList[index]->setArrowColor(color);
+            d->m_maskList[index]->setArrowColor(color);
         }
     }
 
@@ -333,13 +370,33 @@ namespace GlodonMask
 
         for (int index = 0; index < num; ++index)
         {
-            d->m_maskBoxList[index]->setArrowLineWidth(lineWidth);
+            d->m_maskList[index]->setArrowLineWidth(lineWidth);
         }
     }
 
     size_t GLDMaskBox::count()
     {
-        return d->m_maskBoxList.size();
+        return d->m_maskList.size();
     }
+
+    QString GLDMaskBox::getID()
+    {
+        return d->m_maskBoxID;
+    }
+
+    bool GLDMaskBox::isMaskBoxShown()
+    {
+        return d->m_bIsShown;
+    }
+
+    void GLDMaskBox::setAllMaskShown()
+    {
+        for (int i = 0; i < d->m_maskList.size(); ++i)
+        {
+            d->m_maskList[i]->setIsShown(true);
+            d->m_bIsShown = true;
+        }
+    }
+
 }
 

@@ -123,12 +123,6 @@ namespace GlodonMask
         void setIniPath(const QString& iniPath);
 
         /**
-        * @brief 判断蒙版是否已经显示
-        * @return
-        */
-        bool canShow(const QString &iniPath);
-
-        /**
         * @brief 获取需要显示蒙版的widget
         * @return
         */
@@ -136,6 +130,10 @@ namespace GlodonMask
         {
             return m_pClippedWgt;
         }
+
+        void setMaskedWgt(QWidget* wgt);
+
+        void setIsShown(bool show);
 
     public slots:
         /**
@@ -147,6 +145,9 @@ namespace GlodonMask
         * @brief 显示蒙版
         */
         void showMask();
+
+    Q_SIGNALS:
+        void alreadyShow();
 
     protected:
         virtual void paintEvent(QPaintEvent *event);
@@ -210,6 +211,7 @@ namespace GlodonMask
         GLDProxyWidget*         m_pGLDProxyWidget;// 代理widget
 
         static QString          m_iniPath;        // ini文件路径
+        bool                    m_bIsShown;       // 该蒙版是否显示过
     };
 }
 

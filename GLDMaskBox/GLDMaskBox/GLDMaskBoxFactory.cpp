@@ -1,12 +1,45 @@
 #include "GLDMaskBoxFactory.h"
 #include "GLDGetSystemParams.h"
+
 #include <QFile>
+#include <QMenu>
+#include <QToolButton>
 
 namespace GlodonMask
 {
     void GLDMaskBoxFactory::initialize(const QString& xmlPath)
     {
         parseXML(xmlPath);
+    }
+
+    void GLDMaskBoxFactory::showMasks(const QString& id, QList<QWidget*> &wgtList)
+    {
+        menuToBtn(wgtList);
+
+        QHash<QString, GLDMaskBox*>::iterator iter = m_maskBoxHash.begin();
+
+        for (; iter != m_maskBoxHash.end(); ++iter)
+        {
+            if (iter.key() == id)
+            {
+                iter.value()->setMaskedWgts(wgtList);
+            }
+        }
+    }
+
+    void GLDMaskBoxFactory::showMasks(const QString& id, QList<QAction*> &actList)
+    {
+        QList<QWidget*> btnList = actionToBtn(actList);
+
+        QHash<QString, GLDMaskBox*>::iterator iter = m_maskBoxHash.begin();
+
+        for (; iter != m_maskBoxHash.end(); ++iter)
+        {
+            if (iter.key() == id)
+            {
+                iter.value()->setMaskedWgts(btnList);
+            }
+        }
     }
 
     GLDMaskBoxFactory::GLDMaskBoxFactory(QObject* parent)
@@ -18,6 +51,44 @@ namespace GlodonMask
     GLDMaskBoxFactory::~GLDMaskBoxFactory()
     {
 
+    }
+
+
+    void GLDMaskBoxFactory::doParseMaskBoxTipInfos(QDomNodeList &tipList, QList<GLDGuideInfo> &guideInfoList)
+    {
+        for (int i = 0; i < tipList.size(); ++i)
+        {
+            int tipOrder;
+            if (tipList.at(i).toElement().hasAttribute("order"))
+            {
+                tipOrder = tipList.at(i).toElement().attribute("order").toInt();
+            }
+
+            GLDGuideInfo guideInfo;
+
+            QDomElement tipDom = tipList.at(i).firstChildElement();
+            while (!tipDom.isNull())
+            {
+                GLDGuideInfoItem guideInfoItem = doParseTipInfoItem(tipDom);
+
+                if (tipDom.tagName() == "hint")
+                {
+                    guideInfo.m_maskWidgetItem = guideInfoItem;
+                }
+                else if (tipDom.tagName() == "close")
+                {
+                    guideInfo.m_closeButtonItem = guideInfoItem;
+                }
+                else if (tipDom.tagName() == "next")
+                {
+                    guideInfo.m_nextButtonItem = guideInfoItem;
+                }
+
+                tipDom = tipDom.nextSiblingElement();
+            }
+
+            guideInfoList.append(guideInfo);
+        }
     }
 
     void GLDMaskBoxFactory::parseXML(const QString& xmlPath)
@@ -47,14 +118,12 @@ namespace GlodonMask
         QDomNodeList nodeList = root.elementsByTagName(elementTagName);
 
         QStringList shownBoxID;
-        parseIniFile(iniPath, shownBoxID);
+        parseIniFile("", shownBoxID);
 
-        const int count = nodeList.size();
-        for (int i = 0; i < count; ++i)
+        for (int i = 0; i < nodeList.size(); ++i)
         {
-            GLDGuideInfo guideInfo;
-
             QString boxID;
+
             if (nodeList.at(i).toElement().hasAttribute("id"))
             {
                 boxID = nodeList.at(i).toElement().attribute("id");
@@ -65,53 +134,17 @@ namespace GlodonMask
                 continue;
             }
 
-            int tipOrder;
             QString tip = nodeList.at(i).firstChildElement().tagName();
             QDomNodeList tipList = nodeList.at(i).toElement().elementsByTagName(tip);
 
             QList<GLDGuideInfo> guideInfoList;
-            for (int i = 0; i < tipList.size(); ++i)
-            {
-                if (tipList.at(i).toElement().hasAttribute("order"))
-                {
-                    tipOrder = tipDom.attribute("order").toInt();
-                }
+            doParseMaskBoxTipInfos(tipList, guideInfoList);
 
-                QDomElement tipDom = tipList.at(i).firstChildElement();
-
-                GLDGuideInfo guideInfo;
-
-                while(!tipDom.isNull())
-                {
-                    GLDGuideInfoItem guideInfoItem = parseTipNodeItem(tipDom);
-
-                    if (tipDom.tagName() == "hint")
-                    {
-                        guideInfo.m_maskWidgetItem = guideInfoItem;
-                    }
-                    else if (tipDom.tagName() == "close")
-                    {
-                        guideInfo.m_closeButtonItem = guideInfoItem;
-                    }
-                    else if (tipDom.tagName() == "next")
-                    {
-                        guideInfo.m_nextButtonItem = guideInfoItem;
-                    }
-
-                    tipDom = tipDom.nextSiblingElement();
-                }
-
-                guideInfoList.append(guideInfo);
-            }
+            m_maskBoxHash.insert(boxID, new GLDMaskBox(boxID, guideInfoList));
         }
     }
 
-    GlodonMask::GLDMaskBox GLDMaskBoxFactory::parseNodeItem(QDomElement &element)
-    {
-
-    }
-
-    GlodonMask::GLDGuideInfoItem GLDMaskBoxFactory::parseTipNodeItem(QDomElement &element)
+    GlodonMask::GLDGuideInfoItem GLDMaskBoxFactory::doParseTipInfoItem(QDomElement &element)
     {
         int width, height, leftXpos, leftYpos;
         QString normalImage, hoverImage, pressedImage;
@@ -172,4 +205,50 @@ namespace GlodonMask
 
         file.close();
     }
+
+    void GLDMaskBoxFactory::menuToBtn(QList<QWidget*> & wgtList)
+    {
+        for (int index = 0; index < wgtList.count(); ++index)
+        {
+            QWidget* widget = wgtList[index];
+
+            if (!widget)
+            {
+                break;
+            }
+
+            if (QMenu* pMenu = dynamic_cast<QMenu*>(widget))
+            {
+                foreach(QWidget* pWidget, pMenu->menuAction()->associatedWidgets())
+                {
+                    if (QToolButton* pToolButton = dynamic_cast<QToolButton*>(pWidget))
+                    {
+                        widget = pToolButton;
+                    }
+                }
+
+                wgtList.removeAt(index);
+                wgtList.insert(index, widget);
+            }
+        }
+    }
+
+    QList<QWidget*> GLDMaskBoxFactory::actionToBtn(QList<QAction*> & actList)
+    {
+        QList<QWidget *> wgtList;
+
+        foreach(QAction* pAct, actList)
+        {
+            foreach(QWidget* pWidget, pAct->associatedWidgets())
+            {
+                if (QToolButton* pToolButton = dynamic_cast<QToolButton*>(pWidget))
+                {
+                    wgtList.append(pToolButton);
+                }
+            }
+        }
+
+        return wgtList;
+    }
+
 }

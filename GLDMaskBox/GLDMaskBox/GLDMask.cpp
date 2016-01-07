@@ -23,11 +23,7 @@ namespace GlodonMask
     void GLDProxyWidget::showEvent(QShowEvent *event)
     {
         QWidget::showEvent(event);
-
-        if (m_index == 0)
-        {
-            emit tobeShow();
-        }
+        emit tobeShow();
     }
 
     QString GLDMask::m_iniPath = "";
@@ -39,8 +35,14 @@ namespace GlodonMask
         , m_pTipWidget(pTipWgt)
         , m_arrowColor(QColor(1, 169, 240))
         , m_arrowLineWidth(2)
-        , m_pGLDProxyWidget(new GLDProxyWidget(index, pWgt))
+        , m_pGLDProxyWidget(nullptr)
+        , m_bIsShown(false)
     {
+        if (index == 0)
+        {
+            m_pGLDProxyWidget = new GLDProxyWidget(index, pWgt);
+        }
+
         m_pTipWidget->setParent(this);
 
         setFixedSize(QApplication::desktop()->width(), QApplication::desktop()->height());
@@ -326,7 +328,7 @@ namespace GlodonMask
 
             if (mouseEvent->button() == Qt::LeftButton)
             {
-                close();
+                slotClose();
             }
             else
             {
@@ -342,11 +344,14 @@ namespace GlodonMask
         m_iniPath = iniPath;
     }
 
-    bool GLDMask::canShow(const QString & iniPath)
+    void GLDMask::setMaskedWgt(QWidget* wgt)
     {
-        QSettings oInis(iniPath, QSettings::IniFormat);
+        m_pClippedWgt = wgt;
+    }
 
-        return oInis.value("MaskBoxIsShown").toInt();
+    void GLDMask::setIsShown(bool show)
+    {
+        m_bIsShown = show;
     }
 
     void GLDMask::setMaskColor(MASKCOLOR maskColor)
@@ -435,14 +440,14 @@ namespace GlodonMask
 
     void GLDMask::slotClose()
     {
-        QSettings oInis(m_iniPath, QSettings::IniFormat);
-        oInis.setValue("MaskBoxIsShown", 1);
+        m_bIsShown = true;
+        emit alreadyShow();
         close();
     }
 
     void GLDMask::showMask()
     {
-        if (canShow(m_iniPath))
+        if (m_bIsShown)
         {
             return;
         }
