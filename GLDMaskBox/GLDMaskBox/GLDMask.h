@@ -4,7 +4,6 @@
 #include "GLDTipWidget.h"
 #include "GLDMaskBox_Global.h"
 
-#include <QList>
 #include <QSettings>
 #include <QtXml/QDomElement>
 
@@ -66,7 +65,7 @@ namespace GlodonMask
         Q_OBJECT
 
     public:
-        GLDProxyWidget(const int index, QWidget* parent = nullptr);
+        GLDProxyWidget(QWidget* parent = nullptr);
         ~GLDProxyWidget();
 
     protected:
@@ -74,9 +73,6 @@ namespace GlodonMask
 
     Q_SIGNALS:
         void tobeShow();
-
-    protected:
-        int           m_index;
     };
 
     class GLDMASKBOX_EXPORT GLDMask : public QWidget
@@ -93,8 +89,8 @@ namespace GlodonMask
         };
 
     public:
-        explicit GLDMask(QWidget * pWgt, GLDTipWidget * pTipWgt,
-            const int index, QWidget * parent = nullptr);
+        explicit GLDMask(QWidget* pWgt, GLDTipWidget* pTipWgt,
+                         const int index, QWidget* parent = nullptr);
 
         virtual ~GLDMask();
 
@@ -117,22 +113,9 @@ namespace GlodonMask
         void setArrowLineWidth(const int lineWidth);
 
         /**
-        * @brief 设置ini文件路径
-        * @param iniPath
-        */
-        void setIniPath(const QString& iniPath);
-
-        /**
-        * @brief 获取需要显示蒙版的widget
-        * @return
-        */
-        inline QWidget* getClipedWidget()
-        {
-            return m_pClippedWgt;
-        }
-
-        void setMaskedWgt(QWidget* wgt);
-
+         * @brief 设置是否已经显示过
+         * @param show
+         */
         void setIsShown(bool show);
 
     public slots:
@@ -210,7 +193,6 @@ namespace GlodonMask
 
         GLDProxyWidget*         m_pGLDProxyWidget;// 代理widget
 
-        static QString          m_iniPath;        // ini文件路径
         bool                    m_bIsShown;       // 该蒙版是否显示过
     };
 }

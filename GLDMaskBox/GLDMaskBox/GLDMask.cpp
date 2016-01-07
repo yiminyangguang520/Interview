@@ -8,9 +8,8 @@
 
 namespace GlodonMask
 {
-    GLDProxyWidget::GLDProxyWidget(const int index, QWidget *parent)
+    GLDProxyWidget::GLDProxyWidget(QWidget *parent)
         : QWidget(parent)
-        , m_index(index)
     {
 
     }
@@ -26,8 +25,6 @@ namespace GlodonMask
         emit tobeShow();
     }
 
-    QString GLDMask::m_iniPath = "";
-
     GLDMask::GLDMask(QWidget *pWgt, GLDTipWidget *pTipWgt, const int index, QWidget *parent)
         : QWidget(parent)
         , m_maskColor(GLDMask::GrayColor)
@@ -40,7 +37,7 @@ namespace GlodonMask
     {
         if (index == 0)
         {
-            m_pGLDProxyWidget = new GLDProxyWidget(index, pWgt);
+            m_pGLDProxyWidget = new GLDProxyWidget(pWgt);
         }
 
         m_pTipWidget->setParent(this);
@@ -337,16 +334,6 @@ namespace GlodonMask
         }
 
         return QWidget::eventFilter(watched, event);
-    }
-
-    void GLDMask::setIniPath(const QString &iniPath)
-    {
-        m_iniPath = iniPath;
-    }
-
-    void GLDMask::setMaskedWgt(QWidget* wgt)
-    {
-        m_pClippedWgt = wgt;
     }
 
     void GLDMask::setIsShown(bool show)

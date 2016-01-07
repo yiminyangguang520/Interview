@@ -11,12 +11,6 @@ namespace GlodonMask
     class GLDMASKBOX_EXPORT GLDMaskBox : public QObject
     {
     public:
-        explicit GLDMaskBox(QList<QWidget*> wgtList, const QString & xmlPath,
-                            const QString & iniPath);
-
-        explicit GLDMaskBox(QList<QAction*> actList, const QString & xmlPath,
-                            const QString & iniPath);
-
         explicit GLDMaskBox(const QString & id, const QList<GLDGuideInfo> & guideInfoList);
 
         ~GLDMaskBox();

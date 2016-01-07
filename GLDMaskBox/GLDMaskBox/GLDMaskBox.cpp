@@ -139,11 +139,6 @@ namespace GlodonMask
             pTip = new GLDMask(widget, tipList[index], index, pWidget);
             pTip->hide();
 
-            if (0 == index)
-            {
-                pTip->setIniPath(iniPath);
-            }
-
             m_maskList.append(pTip);
         }
     }
@@ -284,36 +279,6 @@ namespace GlodonMask
         m_step++;
         m_maskList[m_step]->show();
         m_maskList[m_step]->raise();
-    }
-
-    QList<QWidget* > GLDMaskBox::InnerMaskBoxImpl::actToWidget(QList<QAction* > actList)
-    {
-        QList<QWidget *> wgtList;
-
-        foreach(QAction* pAct, actList)
-        {
-            foreach(QWidget* pWidget, pAct->associatedWidgets())
-            {
-                if (QToolButton* pToolButton = dynamic_cast<QToolButton*>(pWidget))
-                {
-                    wgtList.append(pToolButton);
-                }
-            }
-        }
-
-        return wgtList;
-    }
-
-    GLDMaskBox::GLDMaskBox(QList<QWidget *> wgtList, const QString &xmlPath, const QString & iniPath)
-        : d(new InnerMaskBoxImpl(wgtList, xmlPath, iniPath))
-    {
-        setParent(topLevelParentWidget(wgtList.at(0)));
-    }
-
-    GLDMaskBox::GLDMaskBox(QList<QAction*> actList, const QString & xmlPath, const QString & iniPath)
-        : d(new InnerMaskBoxImpl(actList, xmlPath, iniPath))
-    {
-        setParent(topLevelParentWidget(d->m_maskList.at(0)->getClipedWidget()));
     }
 
     GLDMaskBox::GLDMaskBox(const QString & id, const QList<GLDGuideInfo> & guideInfoList)
