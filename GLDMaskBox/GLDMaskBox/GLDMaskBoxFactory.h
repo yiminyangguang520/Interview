@@ -26,7 +26,7 @@ namespace GlodonMask
          * @brief 解析XML文件
          * @param xmlPath
          */
-        void parseXML(const QString& xmlPath);
+        void doParseXML(const QString& xmlPath);
 
         /**
          * @brief 解析MaskBox中的一组提示信息
@@ -62,6 +62,13 @@ namespace GlodonMask
         * @return
         */
         QList<QWidget*> actionToBtn(QList<QAction*> & actList);
+
+        /**
+         * @brief 将需要显示蒙版的widget添加到GLDMaskBox中
+         * @param id
+         * @param wgtList
+         */
+        void setWidgets(const QString& id, QList<QWidget*> &wgtList);
 
     private:
         QHash<QString, GLDMaskBox*> m_maskBoxHash;

@@ -9,37 +9,21 @@ namespace GlodonMask
 {
     void GLDMaskBoxFactory::initialize(const QString& xmlPath)
     {
-        parseXML(xmlPath);
+        doParseXML(xmlPath);
     }
 
     void GLDMaskBoxFactory::showMasks(const QString& id, QList<QWidget*> &wgtList)
     {
         menuToBtn(wgtList);
 
-        QHash<QString, GLDMaskBox*>::iterator iter = m_maskBoxHash.begin();
-
-        for (; iter != m_maskBoxHash.end(); ++iter)
-        {
-            if (iter.key() == id)
-            {
-                iter.value()->setMaskedWgts(wgtList);
-            }
-        }
+        setWidgets(id, wgtList);
     }
 
     void GLDMaskBoxFactory::showMasks(const QString& id, QList<QAction*> &actList)
     {
         QList<QWidget*> btnList = actionToBtn(actList);
 
-        QHash<QString, GLDMaskBox*>::iterator iter = m_maskBoxHash.begin();
-
-        for (; iter != m_maskBoxHash.end(); ++iter)
-        {
-            if (iter.key() == id)
-            {
-                iter.value()->setMaskedWgts(btnList);
-            }
-        }
+        setWidgets(id, btnList);
     }
 
     GLDMaskBoxFactory::GLDMaskBoxFactory(QObject* parent)
@@ -91,7 +75,7 @@ namespace GlodonMask
         }
     }
 
-    void GLDMaskBoxFactory::parseXML(const QString& xmlPath)
+    void GLDMaskBoxFactory::doParseXML(const QString& xmlPath)
     {
         QFile file(xmlPath);
         if (!file.open(QFile::ReadOnly | QFile::Text))
@@ -251,4 +235,16 @@ namespace GlodonMask
         return wgtList;
     }
 
+    void GLDMaskBoxFactory::setWidgets(const QString& id, QList<QWidget*> &wgtList)
+    {
+        QHash<QString, GLDMaskBox*>::iterator iter = m_maskBoxHash.begin();
+
+        for (; iter != m_maskBoxHash.end(); ++iter)
+        {
+            if (iter.key() == id)
+            {
+                iter.value()->setMaskedWgts(wgtList);
+            }
+        }
+    }
 }
