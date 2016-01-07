@@ -4,9 +4,6 @@
 #include "GLDTipWidget.h"
 #include "GLDMaskBox_Global.h"
 
-#include <QSettings>
-#include <QtXml/QDomElement>
-
 class QPushButton;
 
 namespace GlodonMask

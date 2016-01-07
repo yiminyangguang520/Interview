@@ -4,8 +4,6 @@
 #include "GLDMask.h"
 #include "GLDMaskBox_Global.h"
 
-#include <QAction>
-
 namespace GlodonMask
 {
     class GLDMASKBOX_EXPORT GLDMaskBox : public QObject

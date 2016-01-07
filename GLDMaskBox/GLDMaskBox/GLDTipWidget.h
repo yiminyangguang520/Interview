@@ -138,7 +138,7 @@ namespace GlodonMask
         void nextButtonClicked();
 
     private:
-        QWidget*            m_pHintWidget;          // 蒙版图片
+        QWidget*            m_pHintWidget;         // 蒙版图片
         QPushButton*        m_pNextButton;         // 下一步按钮
         QPushButton*        m_pCloseButton;        // 关闭按钮
         NEXTCLICKEDCALLBACK m_goCallBack;

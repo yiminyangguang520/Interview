@@ -32,6 +32,11 @@ namespace GlodonMask
         void parseIniFile(const QString& iniPath, QStringList& shownMaskBoxIDList);
 
         void menuToBtn(QList<QWidget*> & wgtList);
+
+        /**
+        * @brief 将action相关的ToolButton形式的widget添加到list中
+        * @return
+        */
         QList<QWidget*> actionToBtn(QList<QAction*> & actList);
 
     private:
