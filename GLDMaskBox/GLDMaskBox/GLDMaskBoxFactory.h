@@ -1,6 +1,9 @@
-#pragma once
+#ifndef GLDMASKBOXFACTORY_H
+#define GLDMASKBOXFACTORY_H
 
 #include "GLDMaskBox.h"
+
+#include <windows.h>
 
 #include <QHash>
 #include <QStringList>
@@ -8,18 +11,22 @@
 
 namespace GlodonMask
 {
-    class GLDMASKBOX_EXPORT GLDMaskBoxFactory : public QObject
+    GLDMASKBOX_EXPORT bool WINAPI Initialize(const QString& xmlPath);
+
+    GLDMASKBOX_EXPORT int WINAPI showMasks(const QString& id, QList<QWidget*> &wgtList);
+
+    GLDMASKBOX_EXPORT bool WINAPI UnInitialize();
+
+    class GLDMaskBoxFactory
     {
-        Q_OBJECT
+    public:
+        GLDMaskBoxFactory(const QString& xmlPath);
+        ~GLDMaskBoxFactory();
 
     public:
-        void initialize(const QString& xmlPath);
         void showMasks(const QString& id, QList<QWidget*> &wgtList);
         void showMasks(const QString& id, QList<QAction*> &actList);
-
-    public:
-        GLDMaskBoxFactory(QObject* parent = nullptr);
-        virtual ~GLDMaskBoxFactory();
+        void writeToFile();
 
     private:
         /**
@@ -42,14 +49,12 @@ namespace GlodonMask
          */
         GLDGuideInfoItem doParseTipInfoItem(QDomElement &element);
 
-
         /**
          * @brief 解析ini文件,该文件中存放已经显示过的MaskBox,对已经显示过的MaskBox进行持久化操作
          * @param iniPath
          * @param shownMaskBoxIDList
          */
         void parseIniFile(const QString& iniPath, QStringList& shownMaskBoxIDList);
-
 
         /**
          * @brief 将wgtList中的Menu转换为button,并添加到list中
@@ -74,3 +79,5 @@ namespace GlodonMask
         QHash<QString, GLDMaskBox*> m_maskBoxHash;
     };
 }
+
+#endif // GLDMASKBOXFACTORY_H

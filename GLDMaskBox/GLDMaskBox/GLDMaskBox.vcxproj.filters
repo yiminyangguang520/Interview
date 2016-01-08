@@ -51,12 +51,6 @@
     <ClCompile Include="GLDTipWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_GLDMaskBoxFactory.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_GLDMaskBoxFactory.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
     <ClCompile Include="GLDMaskBoxFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

@@ -1,15 +1,40 @@
 #include "GLDMaskBoxFactory.h"
 #include "GLDGetSystemParams.h"
 
+#include <assert.h>
+
+#include <QDir>
 #include <QFile>
 #include <QMenu>
+#include <QTextStream>
 #include <QToolButton>
+#include <iostream>
+
+using namespace std;
+
+const QString iniPath = QDir::tempPath() + "/GLDMaskBox.ini";
 
 namespace GlodonMask
 {
-    void GLDMaskBoxFactory::initialize(const QString& xmlPath)
+    static shared_ptr<GLDMaskBoxFactory> g_GLDMaskBoxFactory;
+
+    bool WINAPI Initialize(const QString& xmlPath)
     {
-        doParseXML(xmlPath);
+        assert(!g_GLDMaskBoxFactory);
+        g_GLDMaskBoxFactory.reset(new GLDMaskBoxFactory(xmlPath));
+        return true;
+    }
+
+    bool WINAPI UnInitialize()
+    {
+        g_GLDMaskBoxFactory->writeToFile();
+        return true;
+    }
+
+    int WINAPI showMasks(const QString& id, QList<QWidget*> &wgtList)
+    {
+        g_GLDMaskBoxFactory->showMasks(id, wgtList);
+        return 1;
     }
 
     void GLDMaskBoxFactory::showMasks(const QString& id, QList<QWidget*> &wgtList)
@@ -26,10 +51,9 @@ namespace GlodonMask
         setWidgets(id, btnList);
     }
 
-    GLDMaskBoxFactory::GLDMaskBoxFactory(QObject* parent)
-        : QObject(parent)
+    GLDMaskBoxFactory::GLDMaskBoxFactory(const QString& xmlPath)
     {
-
+        doParseXML(xmlPath);
     }
 
     GLDMaskBoxFactory::~GLDMaskBoxFactory()
@@ -102,7 +126,7 @@ namespace GlodonMask
         QDomNodeList nodeList = root.elementsByTagName(elementTagName);
 
         QStringList shownBoxID;
-        parseIniFile("", shownBoxID);
+        parseIniFile(iniPath, shownBoxID);
 
         for (int i = 0; i < nodeList.size(); ++i)
         {
@@ -186,6 +210,29 @@ namespace GlodonMask
         }
 
         shownMaskBoxIDList = QString::fromLatin1(file.readAll()).split(",");
+
+        file.close();
+    }
+
+    void GLDMaskBoxFactory::writeToFile()
+    {
+        QFile file(iniPath);
+
+        if (file.open(QIODevice::ReadWrite | QIODevice::Text))
+        {
+            QTextStream in(&file);
+
+            QHash<QString, GLDMaskBox*>::iterator iter = m_maskBoxHash.begin();
+
+            for (; iter != m_maskBoxHash.end(); ++iter)
+            {
+                if (iter.value()->isMaskBoxShown())
+                {
+                    in << iter.key() << ",";
+                }
+            }
+
+        }
 
         file.close();
     }
