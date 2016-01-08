@@ -26,7 +26,7 @@ namespace GlodonMask
     public:
         void showMasks(const QString& id, QList<QWidget*> &wgtList);
         void showMasks(const QString& id, QList<QAction*> &actList);
-        void writeToFile();
+        void writeMaskBoxIDToFile();
 
     private:
         /**

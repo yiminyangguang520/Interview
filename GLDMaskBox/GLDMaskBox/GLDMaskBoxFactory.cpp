@@ -27,7 +27,7 @@ namespace GlodonMask
 
     bool WINAPI UnInitialize()
     {
-        g_GLDMaskBoxFactory->writeToFile();
+        g_GLDMaskBoxFactory->writeMaskBoxIDToFile();
         return true;
     }
 
@@ -214,7 +214,7 @@ namespace GlodonMask
         file.close();
     }
 
-    void GLDMaskBoxFactory::writeToFile()
+    void GLDMaskBoxFactory::writeMaskBoxIDToFile()
     {
         QFile file(iniPath);
 
