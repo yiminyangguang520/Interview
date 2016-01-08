@@ -63,7 +63,7 @@ namespace GlodonMask
     GLDMaskBox::GLDMaskBox(const QString & id, const QList<GLDTipInfo> & guideInfoList)
         : d(new InnerMaskBoxImpl(id, guideInfoList))
     {
-
+    
     }
 
     GLDMaskBox::~GLDMaskBox()
@@ -83,9 +83,8 @@ namespace GlodonMask
             pMask->hide();
 
             d->m_maskList.append(pMask);
+            connect(pMask, &GLDMask::alreadyShow, this, &GLDMaskBox::setAllMaskIsShown);
         }
-
-        connect(pMask, &GLDMask::alreadyShow, this, &GLDMaskBox::setAllMaskShown);
     }
 
     void GLDMaskBox::setMaskColor(GLDMask::MASKCOLOR color)
@@ -133,7 +132,7 @@ namespace GlodonMask
         return d->m_bIsShown;
     }
 
-    void GLDMaskBox::setAllMaskShown()
+    void GLDMaskBox::setAllMaskIsShown()
     {
         for (int i = 0; i < d->m_maskList.size(); ++i)
         {

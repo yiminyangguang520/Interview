@@ -13,7 +13,6 @@ namespace GlodonMask
 
         ~GLDMaskBox();
 
-
         /**
         * @brief 设置需要显示蒙版的widget
         * @param color
@@ -57,7 +56,7 @@ namespace GlodonMask
         bool isMaskBoxShown();
 
     private slots:
-        void setAllMaskShown();
+        void setAllMaskIsShown();
 
     private:
         class InnerMaskBoxImpl;
