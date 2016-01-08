@@ -11,11 +11,13 @@
 
 namespace GlodonMask
 {
-    GLDMASKBOX_EXPORT bool WINAPI Initialize(const QString& xmlPath);
+    GLDMASKBOX_EXPORT bool WINAPI initialize(const QString& xmlPath);
 
     GLDMASKBOX_EXPORT int WINAPI showMasks(const QString& id, QList<QWidget*> &wgtList);
 
-    GLDMASKBOX_EXPORT bool WINAPI UnInitialize();
+    GLDMASKBOX_EXPORT int WINAPI showMasks(const QString& id, QList<QAction*> &actList);
+
+    GLDMASKBOX_EXPORT bool WINAPI unInitialize();
 
     class GLDMaskBoxFactory
     {

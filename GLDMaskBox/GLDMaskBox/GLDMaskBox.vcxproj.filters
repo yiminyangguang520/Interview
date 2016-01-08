@@ -62,7 +62,7 @@
     <ClInclude Include="gldmaskbox_global.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GLDGetSystemParams.h">
+    <ClInclude Include="GLDGetSysParams.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

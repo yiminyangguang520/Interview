@@ -1,5 +1,5 @@
 #include "GLDMaskBoxFactory.h"
-#include "GLDGetSystemParams.h"
+#include "GLDGetSysParams.h"
 
 #include <assert.h>
 
@@ -18,14 +18,14 @@ namespace GlodonMask
 {
     static shared_ptr<GLDMaskBoxFactory> g_GLDMaskBoxFactory;
 
-    bool WINAPI Initialize(const QString& xmlPath)
+    bool WINAPI initialize(const QString& xmlPath)
     {
         assert(!g_GLDMaskBoxFactory);
         g_GLDMaskBoxFactory.reset(new GLDMaskBoxFactory(xmlPath));
         return true;
     }
 
-    bool WINAPI UnInitialize()
+    bool WINAPI unInitialize()
     {
         g_GLDMaskBoxFactory->writeMaskBoxIDToFile();
         return true;
