@@ -1,69 +1,25 @@
 #include "GLDMaskBoxInfo.h"
 #include "GLDGetSysParams.h"
 
-#include <assert.h>
-
 #include <QDir>
 #include <QFile>
 #include <QMenu>
 #include <QTextStream>
 #include <QToolButton>
-#include <iostream>
 
-using namespace std;
-
-const QString iniPath = QDir::tempPath() + "/GLDMaskBox.ini";
+const QString g_iniPath = QDir::tempPath() + "/GLDMaskBox.ini";
 
 namespace GlodonMask
 {
-    static shared_ptr<GLDMaskBoxInfo> g_GLDMaskBoxFactory;
-
-    bool WINAPI initialize(const QString& xmlPath)
-    {
-        assert(!g_GLDMaskBoxFactory);
-        g_GLDMaskBoxFactory.reset(new GLDMaskBoxInfo(xmlPath));
-        return true;
-    }
-
-    bool WINAPI unInitialize()
-    {
-        g_GLDMaskBoxFactory->writeMaskBoxIDToFile();
-        return true;
-    }
-
-    int WINAPI showMasks(const QString& id, QList<QWidget*> &wgtList)
-    {
-        g_GLDMaskBoxFactory->showMasks(id, wgtList);
-        return 1;
-    }
-
-    bool WINAPI setMaskBoxColor(const QString & id, GLDMask::MASKCOLOR color)
-    {
-        g_GLDMaskBoxFactory->setMaskBoxColor(id, color);
-        return true;
-    }
-
-    bool WINAPI setMaskBoxArrowColor(const QString& id, const QColor& color)
-    {
-        g_GLDMaskBoxFactory->setMaskBoxArrowColor(id, color);
-        return true;
-    }
-
-    bool WINAPI setMaskArrowLineWidth(const QString& id, const int lineWidth)
-    {
-        g_GLDMaskBoxFactory->setMaskArrowLineWidth(id, lineWidth);
-        return true;
-    }
-
-    class GLDMaskBoxInfo::InnerMaskBoxFactoryImpl
+    class GLDMaskBoxInfo::InnerMaskBoxInfoImpl
     {
     public:
-        InnerMaskBoxFactoryImpl(const QString & xmlPath)
+        InnerMaskBoxInfoImpl(const QString & xmlPath)
         {
             doParseXML(xmlPath);
         }
 
-        ~InnerMaskBoxFactoryImpl()
+        ~InnerMaskBoxInfoImpl()
         {
 
         }
@@ -99,7 +55,7 @@ namespace GlodonMask
             QDomNodeList nodeList = root.elementsByTagName(elementTagName);
 
             QStringList shownBoxID;
-            parseIniFile(iniPath, shownBoxID);
+            parseIniFile(g_iniPath, shownBoxID);
 
             for (int i = 0; i < nodeList.size(); ++i)
             {
@@ -228,7 +184,8 @@ namespace GlodonMask
                 return;
             }
 
-            shownMaskBoxIDList = QString::fromLatin1(file.readAll()).split(",");
+            QString str = QString::fromLatin1(file.readAll());
+            shownMaskBoxIDList = str.remove(str.length() - 1, 1).split(",");
 
             file.close();
         }
@@ -268,7 +225,7 @@ namespace GlodonMask
         * @brief 将action相关的ToolButton形式的widget添加到list中
         * @return
         */
-        QList<QWidget*> actionToBtn(QList<QAction*> & actList)
+        QList<QWidget*> actionToWgt(QList<QAction*> & actList)
         {
             QList<QWidget *> wgtList;
 
@@ -304,11 +261,14 @@ namespace GlodonMask
             }
         }
 
-        void writeMaskBoxIDToFile()
+        /**
+        * @brief 将已经显示过的Mask所在的GLDMaskBox的ID写入到文件
+        */
+        void writeMaskBoxIDToFile(const QString& iniPath = g_iniPath)
         {
             QFile file(iniPath);
 
-            if (file.open(QIODevice::ReadWrite | QIODevice::Text))
+            if (file.open(QIODevice::WriteOnly | QIODevice::Append))
             {
                 QTextStream in(&file);
 
@@ -329,12 +289,12 @@ namespace GlodonMask
         QHash<QString, GLDMaskBox*> m_maskBoxHash;
 
     private:
-        Q_DISABLE_COPY(InnerMaskBoxFactoryImpl)
+        Q_DISABLE_COPY(InnerMaskBoxInfoImpl)
     };
 
 
     GLDMaskBoxInfo::GLDMaskBoxInfo(const QString& xmlPath)
-        : d(new InnerMaskBoxFactoryImpl(xmlPath))
+        : d(new InnerMaskBoxInfoImpl(xmlPath))
     {
 
     }
@@ -353,7 +313,7 @@ namespace GlodonMask
 
     void GLDMaskBoxInfo::showMasks(const QString& id, QList<QAction*> &actList)
     {
-        QList<QWidget*> btnList = d->actionToBtn(actList);
+        QList<QWidget*> btnList = d->actionToWgt(actList);
 
         d->setWidgets(id, btnList);
     }

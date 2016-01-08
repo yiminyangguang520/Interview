@@ -54,6 +54,9 @@
     <ClCompile Include="GLDMaskBoxInfo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GLDMaskBoxUtil.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GLDMaskBox.h">
@@ -63,6 +66,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GLDGetSysParams.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GLDMaskBoxUtil.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

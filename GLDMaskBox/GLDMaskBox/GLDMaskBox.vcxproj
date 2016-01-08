@@ -166,6 +166,7 @@
     <ClCompile Include="GLDMask.cpp" />
     <ClCompile Include="GLDMaskBox.cpp" />
     <ClCompile Include="GLDMaskBoxInfo.cpp" />
+    <ClCompile Include="GLDMaskBoxUtil.cpp" />
     <ClCompile Include="GLDTipWidget.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -233,6 +234,7 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </Command>
     </CustomBuild>
+    <ClInclude Include="GLDMaskBoxUtil.h" />
     <ClInclude Include="GLDMaskBox_Global.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
