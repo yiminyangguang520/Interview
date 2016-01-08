@@ -1,4 +1,4 @@
-#include "GLDMaskBoxFactory.h"
+#include "GLDMaskBoxInfo.h"
 #include "GLDGetSysParams.h"
 
 #include <assert.h>
@@ -16,12 +16,12 @@ const QString iniPath = QDir::tempPath() + "/GLDMaskBox.ini";
 
 namespace GlodonMask
 {
-    static shared_ptr<GLDMaskBoxFactory> g_GLDMaskBoxFactory;
+    static shared_ptr<GLDMaskBoxInfo> g_GLDMaskBoxFactory;
 
     bool WINAPI initialize(const QString& xmlPath)
     {
         assert(!g_GLDMaskBoxFactory);
-        g_GLDMaskBoxFactory.reset(new GLDMaskBoxFactory(xmlPath));
+        g_GLDMaskBoxFactory.reset(new GLDMaskBoxInfo(xmlPath));
         return true;
     }
 
@@ -55,7 +55,7 @@ namespace GlodonMask
         return true;
     }
 
-    class GLDMaskBoxFactory::InnerMaskBoxFactoryImpl
+    class GLDMaskBoxInfo::InnerMaskBoxFactoryImpl
     {
     public:
         InnerMaskBoxFactoryImpl(const QString & xmlPath)
@@ -67,7 +67,6 @@ namespace GlodonMask
         {
 
         }
-
 
         /**
         * @brief ½âÎöXMLÎÄ¼þ
@@ -135,15 +134,9 @@ namespace GlodonMask
         {
             for (int i = 0; i < tipList.size(); ++i)
             {
-                int tipOrder;
-                if (tipList.at(i).toElement().hasAttribute("order"))
-                {
-                    tipOrder = tipList.at(i).toElement().attribute("order").toInt();
-                }
-
                 GLDTipInfo guideInfo;
-
                 QDomElement tipDom = tipList.at(i).firstChildElement();
+
                 while (!tipDom.isNull())
                 {
                     GLDTipInfoItem guideInfoItem = doParseTipInfoItem(tipDom);
@@ -217,7 +210,7 @@ namespace GlodonMask
             }
 
             return GLDTipInfoItem(width, height, leftXpos, leftYpos,
-                normalImage, hoverImage, pressedImage);
+                                  normalImage, hoverImage, pressedImage);
         }
 
         /**
@@ -340,37 +333,37 @@ namespace GlodonMask
     };
 
 
-    GLDMaskBoxFactory::GLDMaskBoxFactory(const QString& xmlPath)
+    GLDMaskBoxInfo::GLDMaskBoxInfo(const QString& xmlPath)
         : d(new InnerMaskBoxFactoryImpl(xmlPath))
     {
 
     }
 
-    GLDMaskBoxFactory::~GLDMaskBoxFactory()
+    GLDMaskBoxInfo::~GLDMaskBoxInfo()
     {
 
     }
 
-    void GLDMaskBoxFactory::showMasks(const QString& id, QList<QWidget*> &wgtList)
+    void GLDMaskBoxInfo::showMasks(const QString& id, QList<QWidget*> &wgtList)
     {
         d->menuToBtn(wgtList);
 
         d->setWidgets(id, wgtList);
     }
 
-    void GLDMaskBoxFactory::showMasks(const QString& id, QList<QAction*> &actList)
+    void GLDMaskBoxInfo::showMasks(const QString& id, QList<QAction*> &actList)
     {
         QList<QWidget*> btnList = d->actionToBtn(actList);
 
         d->setWidgets(id, btnList);
     }
 
-    void GLDMaskBoxFactory::writeMaskBoxIDToFile()
+    void GLDMaskBoxInfo::writeMaskBoxIDToFile()
     {
         d->writeMaskBoxIDToFile();
     }
 
-    void GLDMaskBoxFactory::setMaskBoxColor(const QString& id, GLDMask::MASKCOLOR color)
+    void GLDMaskBoxInfo::setMaskBoxColor(const QString& id, GLDMask::MASKCOLOR color)
     {
         if (GLDMaskBox* pMaskBox = d->m_maskBoxHash.value(id))
         {
@@ -378,7 +371,7 @@ namespace GlodonMask
         }
     }
 
-    void GLDMaskBoxFactory::setMaskBoxArrowColor(const QString& id, const QColor& color)
+    void GLDMaskBoxInfo::setMaskBoxArrowColor(const QString& id, const QColor& color)
     {
         if (GLDMaskBox* pMaskBox = d->m_maskBoxHash.value(id))
         {
@@ -386,7 +379,7 @@ namespace GlodonMask
         }
     }
 
-    void GLDMaskBoxFactory::setMaskArrowLineWidth(const QString& id, const int lineWidth)
+    void GLDMaskBoxInfo::setMaskArrowLineWidth(const QString& id, const int lineWidth)
     {
         if (GLDMaskBox* pMaskBox = d->m_maskBoxHash.value(id))
         {

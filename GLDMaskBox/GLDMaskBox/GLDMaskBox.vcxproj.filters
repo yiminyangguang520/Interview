@@ -51,7 +51,7 @@
     <ClCompile Include="GLDTipWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GLDMaskBoxFactory.cpp">
+    <ClCompile Include="GLDMaskBoxInfo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -73,7 +73,7 @@
     <CustomBuild Include="GLDTipWidget.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="GLDMaskBoxFactory.h">
+    <CustomBuild Include="GLDMaskBoxInfo.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>

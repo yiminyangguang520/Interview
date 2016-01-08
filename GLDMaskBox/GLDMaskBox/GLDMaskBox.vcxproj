@@ -165,7 +165,7 @@
     </ClCompile>
     <ClCompile Include="GLDMask.cpp" />
     <ClCompile Include="GLDMaskBox.cpp" />
-    <ClCompile Include="GLDMaskBoxFactory.cpp" />
+    <ClCompile Include="GLDMaskBoxInfo.cpp" />
     <ClCompile Include="GLDTipWidget.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -207,7 +207,7 @@
     </CustomBuild>
     <ClInclude Include="GLDGetSysParams.h" />
     <ClInclude Include="GLDMaskBox.h" />
-    <CustomBuild Include="GLDMaskBoxFactory.h">
+    <CustomBuild Include="GLDMaskBoxInfo.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
       </Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
