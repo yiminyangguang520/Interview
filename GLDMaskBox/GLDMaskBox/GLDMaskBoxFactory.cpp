@@ -62,7 +62,7 @@ namespace GlodonMask
     }
 
 
-    void GLDMaskBoxFactory::doParseMaskBoxTipInfos(QDomNodeList &tipList, QList<GLDGuideInfo> &guideInfoList)
+    void GLDMaskBoxFactory::doParseMaskBoxTipInfos(QDomNodeList &tipList, QList<GLDTipInfo> &guideInfoList)
     {
         for (int i = 0; i < tipList.size(); ++i)
         {
@@ -72,12 +72,12 @@ namespace GlodonMask
                 tipOrder = tipList.at(i).toElement().attribute("order").toInt();
             }
 
-            GLDGuideInfo guideInfo;
+            GLDTipInfo guideInfo;
 
             QDomElement tipDom = tipList.at(i).firstChildElement();
             while (!tipDom.isNull())
             {
-                GLDGuideInfoItem guideInfoItem = doParseTipInfoItem(tipDom);
+                GLDTipInfoItem guideInfoItem = doParseTipInfoItem(tipDom);
 
                 if (tipDom.tagName() == "hint")
                 {
@@ -145,14 +145,14 @@ namespace GlodonMask
             QString tip = nodeList.at(i).firstChildElement().tagName();
             QDomNodeList tipList = nodeList.at(i).toElement().elementsByTagName(tip);
 
-            QList<GLDGuideInfo> guideInfoList;
+            QList<GLDTipInfo> guideInfoList;
             doParseMaskBoxTipInfos(tipList, guideInfoList);
 
             m_maskBoxHash.insert(boxID, new GLDMaskBox(boxID, guideInfoList));
         }
     }
 
-    GlodonMask::GLDGuideInfoItem GLDMaskBoxFactory::doParseTipInfoItem(QDomElement &element)
+    GlodonMask::GLDTipInfoItem GLDMaskBoxFactory::doParseTipInfoItem(QDomElement &element)
     {
         int width, height, leftXpos, leftYpos;
         QString normalImage, hoverImage, pressedImage;
@@ -195,7 +195,7 @@ namespace GlodonMask
             leftYpos = element.attributeNode("leftYpos").value().toInt();
         }
 
-        return GLDGuideInfoItem(width, height, leftXpos, leftYpos,
+        return GLDTipInfoItem(width, height, leftXpos, leftYpos,
             normalImage, hoverImage, pressedImage);
     }
 

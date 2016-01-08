@@ -46,7 +46,7 @@ namespace GlodonMask
 
         m_pClippedWgt->installEventFilter(this);
 
-        connect(m_pTipWidget, &GLDTipWidget::tipWidgetClicked, this, &GLDMask::slotClose);
+        connect(m_pTipWidget, &GLDTipWidget::closeBtnClicked, this, &GLDMask::slotClose);
 
         connect(m_pGLDProxyWidget, &GLDProxyWidget::tobeShow, this, &GLDMask::showMask);
     }
@@ -334,11 +334,6 @@ namespace GlodonMask
         }
 
         return QWidget::eventFilter(watched, event);
-    }
-
-    void GLDMask::setIsShown(bool show)
-    {
-        m_bIsShown = show;
     }
 
     void GLDMask::setMaskColor(MASKCOLOR maskColor)

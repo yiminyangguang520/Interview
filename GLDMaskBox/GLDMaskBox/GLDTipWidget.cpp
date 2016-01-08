@@ -3,7 +3,7 @@
 namespace GlodonMask
 {
 
-    GLDTipWidget::GLDTipWidget(const GLDGuideInfo & guideInfo, NEXTCLICKEDCALLBACK goCallBack, QWidget * parent)
+    GLDTipWidget::GLDTipWidget(const GLDTipInfo & guideInfo, NEXTCLICKEDCALLBACK goCallBack, QWidget * parent)
         : QWidget(parent)
         , m_pHintWidget(nullptr)
         , m_pNextButton(nullptr)
@@ -58,10 +58,10 @@ namespace GlodonMask
         m_pCloseButton->setObjectName("m_pCloseButton");
         m_pCloseButton->setAutoFillBackground(true);
 
-        connect(m_pCloseButton, &QPushButton::clicked, this, &GLDTipWidget::tipWidgetClicked);
+        connect(m_pCloseButton, &QPushButton::clicked, this, &GLDTipWidget::closeBtnClicked);
     }
 
-    void GLDTipWidget::setHintWidgetStyle(const GLDGuideInfo &guideInfo)
+    void GLDTipWidget::setHintWidgetStyle(const GLDTipInfo &guideInfo)
     {
         if (guideInfo.m_maskWidgetItem.m_normalImage != "")
         {
@@ -81,7 +81,7 @@ namespace GlodonMask
         m_pHintWidget->move(0, 0);
     }
 
-    void GLDTipWidget::setCloseButtonStyle(const GLDGuideInfo &guideInfo)
+    void GLDTipWidget::setCloseButtonStyle(const GLDTipInfo &guideInfo)
     {
         if (guideInfo.m_closeButtonItem.m_normalImage != "")
         {
@@ -102,7 +102,7 @@ namespace GlodonMask
         }
     }
 
-    void GLDTipWidget::setNextButtonStyle(const GLDGuideInfo &guideInfo)
+    void GLDTipWidget::setNextButtonStyle(const GLDTipInfo &guideInfo)
     {
         if (guideInfo.m_nextButtonItem.m_normalImage != "")
         {
@@ -123,7 +123,7 @@ namespace GlodonMask
         }
     }
 
-    QString GLDTipWidget::hintStyleSheet(const GLDGuideInfo &guideInfo)
+    QString GLDTipWidget::hintStyleSheet(const GLDTipInfo &guideInfo)
     {
         return QString("QWidget#m_pHintWidget"
             "{"
@@ -132,7 +132,7 @@ namespace GlodonMask
             );
     }
 
-    QString GLDTipWidget::closeStyleSheet(const GLDGuideInfo &guideInfo)
+    QString GLDTipWidget::closeStyleSheet(const GLDTipInfo &guideInfo)
     {
         return QString("QPushButton#m_pCloseButton"
             "{"
@@ -148,7 +148,7 @@ namespace GlodonMask
             "}");
     }
 
-    QString GLDTipWidget::nextStyleSheet(const GLDGuideInfo &guideInfo)
+    QString GLDTipWidget::nextStyleSheet(const GLDTipInfo &guideInfo)
     {
         return QString("QPushButton#m_pNextButton"
             "{"

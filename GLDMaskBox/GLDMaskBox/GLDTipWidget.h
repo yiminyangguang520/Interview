@@ -3,7 +3,6 @@
 
 #include "GLDMaskBox_Global.h"
 
-#include <QLabel>
 #include <QWidget>
 #include <QPushButton>
 
@@ -13,10 +12,10 @@ namespace GlodonMask
 {
     typedef std::function<void()> NEXTCLICKEDCALLBACK;
 
-    struct GLDGuideInfoItem
+    struct GLDTipInfoItem
     {
-        GLDGuideInfoItem(int width = -1, int height = -1, int leftXPos = -1, int leftYPos = -1,
-            QString normalImage = "", QString hoverImage = "", QString pressedImage = "")
+        GLDTipInfoItem(int width = -1, int height = -1, int leftXPos = -1, int leftYPos = -1,
+                       QString normalImage = "", QString hoverImage = "", QString pressedImage = "")
             : m_width(width)
             , m_height(height)
             , m_leftXPos(leftXPos)
@@ -38,16 +37,16 @@ namespace GlodonMask
         QString m_pressedImage;    // 鼠标按下时效果
     };
 
-    struct GLDGuideInfo
+    struct GLDTipInfo
     {
-        GLDGuideInfo()
+        GLDTipInfo()
         {
 
         }
 
-        GLDGuideInfo(GLDGuideInfoItem maskWidgetItem,
-                     GLDGuideInfoItem nextButtonItem,
-                     GLDGuideInfoItem closeButtonItem)
+        GLDTipInfo(GLDTipInfoItem maskWidgetItem,
+                     GLDTipInfoItem nextButtonItem,
+                     GLDTipInfoItem closeButtonItem)
             : m_maskWidgetItem(maskWidgetItem)
             , m_nextButtonItem(nextButtonItem)
             , m_closeButtonItem(closeButtonItem)
@@ -55,9 +54,9 @@ namespace GlodonMask
 
         }
 
-        GLDGuideInfoItem m_maskWidgetItem;    // 提示信息
-        GLDGuideInfoItem m_nextButtonItem;    // 下一步
-        GLDGuideInfoItem m_closeButtonItem;   // 关闭
+        GLDTipInfoItem m_maskWidgetItem;    // 提示信息
+        GLDTipInfoItem m_nextButtonItem;    // 下一步
+        GLDTipInfoItem m_closeButtonItem;   // 关闭
     };
 
 
@@ -67,7 +66,7 @@ namespace GlodonMask
         Q_OBJECT
 
     public:
-        explicit GLDTipWidget(const GLDGuideInfo & guideInfo,
+        explicit GLDTipWidget(const GLDTipInfo & guideInfo,
                               NEXTCLICKEDCALLBACK goCallBack = nullptr,
                               QWidget * parent = 0);
         ~GLDTipWidget();
@@ -93,43 +92,43 @@ namespace GlodonMask
         * @brief 设置蒙版样式
         * @param guideInfo    当前蒙版页信息
         */
-        void setHintWidgetStyle(const GLDGuideInfo &guideInfo);
+        void setHintWidgetStyle(const GLDTipInfo &guideInfo);
 
         /**
         * @brief 设置关闭按钮样式
         * @param guideInfo    当前蒙版页信息
         */
-        void setCloseButtonStyle(const GLDGuideInfo &guideInfo);
+        void setCloseButtonStyle(const GLDTipInfo &guideInfo);
 
         /**
         * @brief 设置下一步按钮样式
         * @param guideInfo    当前蒙版页信息
         */
-        void setNextButtonStyle(const GLDGuideInfo &guideInfo);
+        void setNextButtonStyle(const GLDTipInfo &guideInfo);
 
         /**
         * @brief 获取蒙版样式
         * @param guideInfo    当前蒙版页信息
         * @return
         */
-        QString hintStyleSheet(const GLDGuideInfo &guideInfo);
+        QString hintStyleSheet(const GLDTipInfo &guideInfo);
 
         /**
         * @brief 获取关闭按钮样式
         * @param guideInfo    当前蒙版页信息
         * @return
         */
-        QString closeStyleSheet(const GLDGuideInfo &guideInfo);
+        QString closeStyleSheet(const GLDTipInfo &guideInfo);
 
         /**
         * @brief 获取下一步按钮样式
         * @param guideInfo    当前蒙版页信息
         * @return
         */
-        QString nextStyleSheet(const GLDGuideInfo &guideInfo);
+        QString nextStyleSheet(const GLDTipInfo &guideInfo);
 
-    signals:
-        void tipWidgetClicked();
+    Q_SIGNALS:
+        void closeBtnClicked();
 
     private slots:
         /**
@@ -138,10 +137,10 @@ namespace GlodonMask
         void nextButtonClicked();
 
     private:
-        QWidget*            m_pHintWidget;         // 蒙版图片
+        QWidget*            m_pHintWidget;         // 提示图片
         QPushButton*        m_pNextButton;         // 下一步按钮
         QPushButton*        m_pCloseButton;        // 关闭按钮
-        NEXTCLICKEDCALLBACK m_goCallBack;
+        NEXTCLICKEDCALLBACK m_goCallBack;          // 回调函数指针
     };
 }
 

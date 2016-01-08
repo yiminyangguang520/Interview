@@ -7,12 +7,12 @@ namespace GlodonMask
     class GLDMaskBox::InnerMaskBoxImpl
     {
     public:
-        InnerMaskBoxImpl(const QString & id, const QList<GLDGuideInfo> & guideInfoList)
+        InnerMaskBoxImpl(const QString & id, const QList<GLDTipInfo> & guideInfoList)
             : m_step(0)
             , m_maskBoxID(id)
             , m_bIsShown(false)
         {
-            foreach(GLDGuideInfo guideInfo, guideInfoList)
+            foreach(GLDTipInfo guideInfo, guideInfoList)
             {
                 NEXTCLICKEDCALLBACK next = std::bind(&GLDMaskBox::InnerMaskBoxImpl::onNextBtnClicked, this);
                 m_tipWgtList.append(new GLDTipWidget(guideInfo, next));
@@ -59,7 +59,7 @@ namespace GlodonMask
 
 
 
-    GLDMaskBox::GLDMaskBox(const QString & id, const QList<GLDGuideInfo> & guideInfoList)
+    GLDMaskBox::GLDMaskBox(const QString & id, const QList<GLDTipInfo> & guideInfoList)
         : d(new InnerMaskBoxImpl(id, guideInfoList))
     {
 
@@ -117,7 +117,7 @@ namespace GlodonMask
         }
     }
 
-    size_t GLDMaskBox::count()
+    size_t GLDMaskBox::count() const
     {
         return d->m_maskList.size();
     }

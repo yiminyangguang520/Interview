@@ -33,6 +33,7 @@ namespace GlodonMask
         return widget;
     }
 
+
     struct CoordinateParam
     {
     public:
@@ -71,6 +72,7 @@ namespace GlodonMask
     Q_SIGNALS:
         void tobeShow();
     };
+
 
     class GLDMASKBOX_EXPORT GLDMask : public QWidget
     {
@@ -113,7 +115,10 @@ namespace GlodonMask
          * @brief 设置是否已经显示过
          * @param show
          */
-        void setIsShown(bool show);
+        inline void setIsShown(bool show)
+        {
+            m_bIsShown = show;
+        }
 
     public slots:
         /**

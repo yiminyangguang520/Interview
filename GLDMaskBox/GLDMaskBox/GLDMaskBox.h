@@ -9,7 +9,7 @@ namespace GlodonMask
     class GLDMASKBOX_EXPORT GLDMaskBox : public QObject
     {
     public:
-        explicit GLDMaskBox(const QString & id, const QList<GLDGuideInfo> & guideInfoList);
+        explicit GLDMaskBox(const QString & id, const QList<GLDTipInfo> & guideInfoList);
 
         ~GLDMaskBox();
 
@@ -42,7 +42,7 @@ namespace GlodonMask
         * @brief 返回蒙版个数
         * @return
         */
-        size_t count();
+        size_t count() const;
 
         /**
         * @brief 获取MaskBox的ID

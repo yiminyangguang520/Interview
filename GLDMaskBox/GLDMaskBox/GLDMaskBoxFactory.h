@@ -40,14 +40,14 @@ namespace GlodonMask
          * @param tipList
          * @param guideInfoList
          */
-        void doParseMaskBoxTipInfos(QDomNodeList &tipList, QList<GLDGuideInfo> &guideInfoList);
+        void doParseMaskBoxTipInfos(QDomNodeList &tipList, QList<GLDTipInfo> &guideInfoList);
 
         /**
          * @brief 解析提示信息中的单个Item(hint、close、next)
          * @param element
          * @return
          */
-        GLDGuideInfoItem doParseTipInfoItem(QDomElement &element);
+        GLDTipInfoItem doParseTipInfoItem(QDomElement &element);
 
         /**
          * @brief 解析ini文件,该文件中存放已经显示过的MaskBox,对已经显示过的MaskBox进行持久化操作
