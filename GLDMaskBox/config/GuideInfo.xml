@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GLDMaskBoxs>
     <GLDMaskBox id = "M1">
-        <tip order = "1">
-            <hint  name="hint"  width="305"  height="511" normalimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/target.png"/>
-            <close name="close" width="30"   height="30"  normalimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/close-normal.png" hoverimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/close-hover.png" pressedimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/close-pressed.png" leftXpos="255" leftYpos="255"/>
-            <next  name="next"  width="128"  height="38"  normalimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/next-normal.png"  hoverimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/next-hover.png"  pressedimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/next-pressed.png" leftXpos="89" leftYpos="445"/>
+        <tip>
+            <hint  width="305"  height="511" normalimage=":/image/target.png"/>
+            <close X="255" Y="255" width="30"   height="30"  normalimage=":/image/close-normal.png" hoverimage=":/image/close-hover.png" pressedimage=":/image/close-pressed.png"/>
+            <next  X="89"  Y="445" width="128"  height="38"  normalimage=":/image/next-normal.png"  hoverimage=":/image/next-hover.png"  pressedimage=":/image/next-pressed.png"/>
         </tip>
 
-        <tip order = "2">
-            <hint   name="hint"  width="507"   height="511" normalimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/next.png"/>
-            <close  name="close" width="30"    height="30"  normalimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/close-normal.png" hoverimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/close-hover.png" pressedimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/close-pressed.png" leftXpos="455" leftYpos="255"/>
-            <next   name="next"  width="128"   height="38"  normalimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/try-normal.png"   hoverimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/try-hover.png"   pressedimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/try-pressed.png"   leftXpos="295" leftYpos="446"/>
+        <tip>
+            <hint  width="507" height="511" normalimage=":/image/next.png"/>
+            <close X="455" Y="255" width="30"  height="30"  normalimage=":/image/close-normal.png" hoverimage=":/image/close-hover.png" pressedimage=":/image/close-pressed.png"/>
+            <next  X="295" Y="446" width="128" height="38" normalimage=":/image/try-normal.png"    hoverimage=":/image/try-hover.png"   pressedimage=":/image/try-pressed.png"/>
         </tip>
     </GLDMaskBox>
     <GLDMaskBox id = "M2">
-        <tip order = "1">
-            <hint  name="hint"  width="305"  height="511" normalimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/target.png"/>
-            <close name="close" width="30"   height="30"  normalimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/close-normal.png" hoverimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/close-hover.png" pressedimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/close-pressed.png" leftXpos="255" leftYpos="255"/>
-            <next  name="next"  width="128"  height="38"  normalimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/next-normal.png"  hoverimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/next-hover.png"  pressedimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/next-pressed.png" leftXpos="89" leftYpos="445"/>
+        <tip>
+            <hint  width="305"  height="511" normalimage=":/image/target.png"/>
+            <close X="255" Y="255" width="30"  height="30" normalimage=":/image/close-normal.png" hoverimage=":/image/close-hover.png" pressedimage=":/image/close-pressed.png"/>
+            <next  X="89"  Y="445" width="128" height="38" normalimage=":/image/next-normal.png"  hoverimage=":/image/next-hover.png"  pressedimage=":/image/next-pressed.png"/>
         </tip>
 
-        <tip order = "2">
-            <hint   name="hint"  width="507"   height="511" normalimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/next.png"/>
-            <close  name="close" width="30"    height="30"  normalimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/close-normal.png" hoverimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/close-hover.png" pressedimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/close-pressed.png" leftXpos="455" leftYpos="255"/>
-            <next   name="next"  width="128"   height="38"  normalimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/try-normal.png"   hoverimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/try-hover.png"   pressedimage="E:/workspace/GMPT/Externals/GlodonResource/ThirdPart/Qtitan/bin/image/try-pressed.png"   leftXpos="295" leftYpos="446"/>
+        <tip>
+            <hint  width="507" height="511" normalimage=":/image/next.png"/>
+            <close X="455" Y="255" width="30"  height="30" normalimage=":/image/close-normal.png" hoverimage=":/image/close-hover.png" pressedimage=":/image/close-pressed.png"/>
+            <next  X="295" Y="446" width="128" height="38" normalimage=":/image/try-normal.png"   hoverimage=":/image/try-hover.png"   pressedimage=":/image/try-pressed.png"/>
         </tip>
     </GLDMaskBox>
 </GLDMaskBoxs>
