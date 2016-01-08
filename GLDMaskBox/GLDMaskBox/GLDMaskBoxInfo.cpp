@@ -195,8 +195,10 @@ namespace GlodonMask
         * @param wgtList
         */
         // todo
-        void menuToBtn(QList<QWidget*> & wgtList)
+        QList<QWidget*> menuToAssociatedWgt(QList<QWidget*> & wgtList)
         {
+            QList<QWidget*> associatedWgtList;
+
             for (int index = 0; index < wgtList.count(); ++index)
             {
                 QWidget* widget = wgtList[index];
@@ -215,23 +217,29 @@ namespace GlodonMask
                             widget = pToolButton;
                         }
                     }
-
-                    wgtList.removeAt(index);
-                    wgtList.insert(index, widget);
                 }
+
+                associatedWgtList.append(widget);
             }
+
+            return associatedWgtList;
         }
 
         /**
         * @brief 将action相关的ToolButton形式的widget添加到list中
         * @return
         */
-        QList<QWidget*> actionToWgt(QList<QAction*> & actList)
+        QList<QWidget*> actionToAssociatedWgt(QList<QAction*> & actList)
         {
             QList<QWidget *> wgtList;
 
             foreach(QAction* pAct, actList)
             {
+                if (!pAct)
+                {
+                    break;
+                }
+
                 foreach(QWidget* pWidget, pAct->associatedWidgets())
                 {
                     if (QToolButton* pToolButton = dynamic_cast<QToolButton*>(pWidget))
@@ -251,14 +259,12 @@ namespace GlodonMask
         */
         void setWidgets(const QString& id, QList<QWidget*> &wgtList)
         {
-            QHash<QString, GLDMaskBox*>::iterator iter = m_maskBoxHash.begin();
             // todo
-            for (; iter != m_maskBoxHash.end(); ++iter)
+            QHash<QString, GLDMaskBox*>::iterator iter = m_maskBoxHash.find(id);
+
+            if ((*iter))
             {
-                if (iter.key() == id)
-                {
-                    iter.value()->setMaskedWgts(wgtList);
-                }
+                (*iter)->setMaskedWgts(wgtList);
             }
         }
 
@@ -307,17 +313,21 @@ namespace GlodonMask
 
     void GLDMaskBoxInfo::showMasks(const QString& id, QList<QWidget*> &wgtList)
     {
-        // todo
-        d->menuToBtn(wgtList);
-
-        d->setWidgets(id, wgtList);
+        // todo 返回状态码
+        if (d->m_maskBoxHash.keys().contains(id))
+        {
+            QList<QWidget*> associatedWgtList = d->menuToAssociatedWgt(wgtList);
+            d->setWidgets(id, associatedWgtList);
+        }
     }
 
     void GLDMaskBoxInfo::showMasks(const QString& id, QList<QAction*> &actList)
     {
-        QList<QWidget*> btnList = d->actionToWgt(actList);
-
-        d->setWidgets(id, btnList);
+        if (d->m_maskBoxHash.keys().contains(id))
+        {
+            QList<QWidget*> associatedWgtList = d->actionToAssociatedWgt(actList);
+            d->setWidgets(id, associatedWgtList);
+        }
     }
 
     void GLDMaskBoxInfo::writeMaskBoxIDToFile()
@@ -327,7 +337,9 @@ namespace GlodonMask
 
     void GLDMaskBoxInfo::setMaskBoxColor(const QString& id, GLDMask::MASKCOLOR color)
     {
-        if (GLDMaskBox* pMaskBox = d->m_maskBoxHash.value(id))
+        GLDMaskBox* pMaskBox = d->m_maskBoxHash.value(id);
+
+        if (pMaskBox && !pMaskBox->isMaskBoxShown())
         {
             pMaskBox->setMaskColor(color);
         }
@@ -336,7 +348,9 @@ namespace GlodonMask
     void GLDMaskBoxInfo::setMaskBoxArrowColor(const QString& id, const QColor& color)
     {
         // todo
-        if (GLDMaskBox* pMaskBox = d->m_maskBoxHash.value(id))
+        GLDMaskBox* pMaskBox = d->m_maskBoxHash.value(id);
+
+        if (pMaskBox && !pMaskBox->isMaskBoxShown())
         {
             pMaskBox->setMaskArrowColor(color);
         }
@@ -344,7 +358,9 @@ namespace GlodonMask
 
     void GLDMaskBoxInfo::setMaskArrowLineWidth(const QString& id, const int lineWidth)
     {
-        if (GLDMaskBox* pMaskBox = d->m_maskBoxHash.value(id))
+        GLDMaskBox* pMaskBox = d->m_maskBoxHash.value(id);
+
+        if (pMaskBox && !pMaskBox->isMaskBoxShown())
         {
             pMaskBox->setMaskArrowLineWidth(lineWidth);
         }

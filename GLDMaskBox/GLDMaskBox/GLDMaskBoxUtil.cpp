@@ -25,7 +25,7 @@ namespace GlodonMask
 
     int WINAPI showMasks(const QString& id, QList<QWidget*> &wgtList)
     {
-        // todo
+        // todo ·µ»Ø×´Ì¬Âë
         assert(!g_GLDMaskBoxInfo);
         g_GLDMaskBoxInfo->showMasks(id, wgtList);
         return 1;
