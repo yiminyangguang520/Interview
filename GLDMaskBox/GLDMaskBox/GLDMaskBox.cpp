@@ -41,6 +41,7 @@ namespace GlodonMask
             }
 
             m_step++;
+
             m_maskList[m_step]->show();
             m_maskList[m_step]->raise();
         }

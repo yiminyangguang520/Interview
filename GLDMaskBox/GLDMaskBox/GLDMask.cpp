@@ -130,19 +130,19 @@ namespace GlodonMask
 
         switch (m_maskColor)
         {
-        case GLDMask::GrayColor:             // 128, 128, 128
+        case GLDMask::GrayColor:                // 128, 128, 128
             color = QColor(0, 0, 0, 100);
             break;
 
-        case GLDMask::CoolGreyColor:         // 128, 138, 135
+        case GLDMask::CoolGreyColor:            // 128, 138, 135
             color = QColor(128, 138, 135, 150);
             break;
 
-        case GLDMask::LightGrayColor:        // 160, 160, 164
+        case GLDMask::LightGrayColor:           // 160, 160, 164
             color = QColor(160, 160, 164, 100);
             break;
 
-        case GLDMask::DarkGrayColor:         // 128, 128, 128
+        case GLDMask::DarkGrayColor:            // 128, 128, 128
             color = QColor(128, 128, 128, 100);
             break;
 

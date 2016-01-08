@@ -71,6 +71,8 @@ namespace GlodonMask
                               QWidget * parent = 0);
         ~GLDTipWidget();
 
+
+    private:
         /**
         * @brief 初始化蒙版主界面
         */
@@ -86,43 +88,41 @@ namespace GlodonMask
         */
         void initCloseButton();
 
-    private:
-
         /**
-        * @brief 设置蒙版样式
-        * @param guideInfo    当前蒙版页信息
+        * @brief 设置提示信息样式
+        * @param guideInfo    当前提示信息
         */
         void setHintWidgetStyle(const GLDTipInfo &guideInfo);
 
         /**
         * @brief 设置关闭按钮样式
-        * @param guideInfo    当前蒙版页信息
+        * @param guideInfo    当前提示信息
         */
         void setCloseButtonStyle(const GLDTipInfo &guideInfo);
 
         /**
         * @brief 设置下一步按钮样式
-        * @param guideInfo    当前蒙版页信息
+        * @param guideInfo    当前提示信息
         */
         void setNextButtonStyle(const GLDTipInfo &guideInfo);
 
         /**
-        * @brief 获取蒙版样式
-        * @param guideInfo    当前蒙版页信息
+        * @brief 获取提示样式
+        * @param guideInfo    当前提示信息
         * @return
         */
         QString hintStyleSheet(const GLDTipInfo &guideInfo);
 
         /**
         * @brief 获取关闭按钮样式
-        * @param guideInfo    当前蒙版页信息
+        * @param guideInfo    当前提示信息
         * @return
         */
         QString closeStyleSheet(const GLDTipInfo &guideInfo);
 
         /**
         * @brief 获取下一步按钮样式
-        * @param guideInfo    当前蒙版页信息
+        * @param guideInfo    当前提示信息
         * @return
         */
         QString nextStyleSheet(const GLDTipInfo &guideInfo);
