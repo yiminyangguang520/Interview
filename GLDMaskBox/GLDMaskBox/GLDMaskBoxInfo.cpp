@@ -91,8 +91,8 @@ namespace GlodonMask
             for (int i = 0; i < tipList.size(); ++i)
             {
                 GLDTipInfo guideInfo;
-                QDomElement tipDom = tipList.at(i).firstChildElement();
 
+                QDomElement tipDom = tipList.at(i).firstChildElement();
                 while (!tipDom.isNull())
                 {
                     GLDTipInfoItem guideInfoItem = doParseTipInfoItem(tipDom);
@@ -194,6 +194,7 @@ namespace GlodonMask
         * @brief 将wgtList中的Menu转换为button,并添加到list中
         * @param wgtList
         */
+        // todo
         void menuToBtn(QList<QWidget*> & wgtList)
         {
             for (int index = 0; index < wgtList.count(); ++index)
@@ -251,7 +252,7 @@ namespace GlodonMask
         void setWidgets(const QString& id, QList<QWidget*> &wgtList)
         {
             QHash<QString, GLDMaskBox*>::iterator iter = m_maskBoxHash.begin();
-
+            // todo
             for (; iter != m_maskBoxHash.end(); ++iter)
             {
                 if (iter.key() == id)
@@ -306,6 +307,7 @@ namespace GlodonMask
 
     void GLDMaskBoxInfo::showMasks(const QString& id, QList<QWidget*> &wgtList)
     {
+        // todo
         d->menuToBtn(wgtList);
 
         d->setWidgets(id, wgtList);
@@ -333,6 +335,7 @@ namespace GlodonMask
 
     void GLDMaskBoxInfo::setMaskBoxArrowColor(const QString& id, const QColor& color)
     {
+        // todo
         if (GLDMaskBox* pMaskBox = d->m_maskBoxHash.value(id))
         {
             pMaskBox->setMaskArrowColor(color);
