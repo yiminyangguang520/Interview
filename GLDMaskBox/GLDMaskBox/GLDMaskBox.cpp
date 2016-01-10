@@ -71,9 +71,12 @@ namespace GlodonMask
 
     }
 
-    void GLDMaskBox::setMaskedWgts(QList<QWidget*> & wgtList)
+    STATUS GLDMaskBox::setMaskedWgts(QList<QWidget*> & wgtList)
     {
-        Q_ASSERT(wgtList.size() == d->m_tipWgtList.size());
+        if (wgtList.size() != d->m_tipWgtList.size())
+        {
+            return FAILURE;
+        }
 
         GLDMask* pMask = nullptr;
 
@@ -85,6 +88,8 @@ namespace GlodonMask
             d->m_maskList.append(pMask);
             connect(pMask, &GLDMask::alreadyShow, this, &GLDMaskBox::setAllMaskIsShown);
         }
+
+        return SUCCESS;
     }
 
     void GLDMaskBox::setMaskColor(GLDMask::MASKCOLOR color)

@@ -11,13 +11,6 @@
 
 namespace GlodonMask
 {
-    enum STATUS
-    {
-        UNKNOWN,
-        SUCCESS,
-        FAILURE
-    };
-
     class GLDMASKBOX_EXPORT GLDMaskBoxInfo
     {
     public:

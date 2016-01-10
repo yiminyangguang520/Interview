@@ -257,15 +257,17 @@ namespace GlodonMask
         * @param id
         * @param wgtList
         */
-        void setWidgets(const QString& id, QList<QWidget*> &wgtList)
+        STATUS setWidgets(const QString& id, QList<QWidget*> &wgtList)
         {
             // todo
             QHash<QString, GLDMaskBox*>::iterator iter = m_maskBoxHash.find(id);
 
             if ((*iter))
             {
-                (*iter)->setMaskedWgts(wgtList);
+                return (*iter)->setMaskedWgts(wgtList);
             }
+
+            return FAILURE;
         }
 
         /**
@@ -317,14 +319,10 @@ namespace GlodonMask
         if (d->m_maskBoxHash.keys().contains(id))
         {
             QList<QWidget*> associatedWgtList = d->menuToAssociatedWgt(wgtList);
-            d->setWidgets(id, associatedWgtList);
+            return d->setWidgets(id, associatedWgtList);
+        }
 
-            return SUCCESS;
-        }
-        else
-        {
-            return FAILURE;
-        }
+        return FAILURE;
     }
 
     STATUS GLDMaskBoxInfo::showMasks(const QString& id, QList<QAction*> &actList)
@@ -332,14 +330,10 @@ namespace GlodonMask
         if (d->m_maskBoxHash.keys().contains(id))
         {
             QList<QWidget*> associatedWgtList = d->actionToAssociatedWgt(actList);
-            d->setWidgets(id, associatedWgtList);
+            return d->setWidgets(id, associatedWgtList);
+        }
 
-            return SUCCESS;
-        }
-        else
-        {
-            return FAILURE;
-        }
+        return FAILURE;
     }
 
     void GLDMaskBoxInfo::writeMaskBoxIDToFile()

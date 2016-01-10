@@ -6,6 +6,13 @@
 
 namespace GlodonMask
 {
+    enum STATUS
+    {
+        UNKNOWN,
+        SUCCESS,
+        FAILURE
+    };
+
     class GLDMASKBOX_EXPORT GLDMaskBox : public QObject
     {
     public:
@@ -17,7 +24,7 @@ namespace GlodonMask
         * @brief 设置需要显示蒙版的widget
         * @param color
         */
-        void setMaskedWgts(QList<QWidget*> & wgtList);
+        STATUS setMaskedWgts(QList<QWidget*> & wgtList);
 
         /**
         * @brief 设置蒙版颜色
