@@ -139,19 +139,19 @@ namespace GlodonMask
 
             if (element.hasAttribute("normalimage"))
             {
-                normalImage = element.attributeNode("normalimage").value();
+                normalImage = element.attributeNode("normalimage").value().replace("\\", "/");
                 replaceAllParams(normalImage);
             }
 
             if (element.hasAttribute("hoverimage"))
             {
-                hoverImage = element.attributeNode("hoverimage").value();
+                hoverImage = element.attributeNode("hoverimage").value().replace("\\", "/");
                 replaceAllParams(hoverImage);
             }
 
             if (element.hasAttribute("pressedimage"))
             {
-                pressedImage = element.attributeNode("pressedimage").value();
+                pressedImage = element.attributeNode("pressedimage").value().replace("\\", "/");
                 replaceAllParams(pressedImage);
             }
 
