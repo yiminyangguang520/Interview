@@ -311,22 +311,34 @@ namespace GlodonMask
 
     }
 
-    void GLDMaskBoxInfo::showMasks(const QString& id, QList<QWidget*> &wgtList)
+    STATUS GLDMaskBoxInfo::showMasks(const QString& id, QList<QWidget*> &wgtList)
     {
         // todo ·µ»Ø×´Ì¬Âë
         if (d->m_maskBoxHash.keys().contains(id))
         {
             QList<QWidget*> associatedWgtList = d->menuToAssociatedWgt(wgtList);
             d->setWidgets(id, associatedWgtList);
+
+            return SUCCESS;
+        }
+        else
+        {
+            return FAILURE;
         }
     }
 
-    void GLDMaskBoxInfo::showMasks(const QString& id, QList<QAction*> &actList)
+    STATUS GLDMaskBoxInfo::showMasks(const QString& id, QList<QAction*> &actList)
     {
         if (d->m_maskBoxHash.keys().contains(id))
         {
             QList<QWidget*> associatedWgtList = d->actionToAssociatedWgt(actList);
             d->setWidgets(id, associatedWgtList);
+
+            return SUCCESS;
+        }
+        else
+        {
+            return FAILURE;
         }
     }
 
@@ -335,17 +347,21 @@ namespace GlodonMask
         d->writeMaskBoxIDToFile();
     }
 
-    void GLDMaskBoxInfo::setMaskBoxColor(const QString& id, GLDMask::MASKCOLOR color)
+    bool GLDMaskBoxInfo::setMaskBoxColor(const QString& id, GLDMask::MASKCOLOR color)
     {
         GLDMaskBox* pMaskBox = d->m_maskBoxHash.value(id);
 
         if (pMaskBox && !pMaskBox->isMaskBoxShown())
         {
             pMaskBox->setMaskColor(color);
+
+            return true;
         }
+
+        return false;
     }
 
-    void GLDMaskBoxInfo::setMaskBoxArrowColor(const QString& id, const QColor& color)
+    bool GLDMaskBoxInfo::setMaskBoxArrowColor(const QString& id, const QColor& color)
     {
         // todo
         GLDMaskBox* pMaskBox = d->m_maskBoxHash.value(id);
@@ -353,17 +369,25 @@ namespace GlodonMask
         if (pMaskBox && !pMaskBox->isMaskBoxShown())
         {
             pMaskBox->setMaskArrowColor(color);
+
+            return true;
         }
+
+        return false;
     }
 
-    void GLDMaskBoxInfo::setMaskArrowLineWidth(const QString& id, const int lineWidth)
+    bool GLDMaskBoxInfo::setMaskArrowLineWidth(const QString& id, const int lineWidth)
     {
         GLDMaskBox* pMaskBox = d->m_maskBoxHash.value(id);
 
         if (pMaskBox && !pMaskBox->isMaskBoxShown())
         {
             pMaskBox->setMaskArrowLineWidth(lineWidth);
+
+            return true;
         }
+
+        return false;
     }
 
 }
