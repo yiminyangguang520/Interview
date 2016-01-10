@@ -124,7 +124,7 @@ namespace GlodonMask
         */
         GLDTipInfoItem doParseTipInfoItem(QDomElement &element)
         {
-            int width, height, leftXpos, leftYpos;
+            int width, height, X, Y;
             QString normalImage, hoverImage, pressedImage;
 
             if (element.hasAttribute("width"))
@@ -155,17 +155,17 @@ namespace GlodonMask
                 replaceAllParams(pressedImage);
             }
 
-            if (element.hasAttribute("leftXpos"))
+            if (element.hasAttribute("X"))
             {
-                leftXpos = element.attributeNode("leftXpos").value().toInt();
+                X = element.attributeNode("X").value().toInt();
             }
 
-            if (element.hasAttribute("leftYpos"))
+            if (element.hasAttribute("Y"))
             {
-                leftYpos = element.attributeNode("leftYpos").value().toInt();
+                Y = element.attributeNode("Y").value().toInt();
             }
 
-            return GLDTipInfoItem(width, height, leftXpos, leftYpos,
+            return GLDTipInfoItem(width, height, X, Y,
                                   normalImage, hoverImage, pressedImage);
         }
 

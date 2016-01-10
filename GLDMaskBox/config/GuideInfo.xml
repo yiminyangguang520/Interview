@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GLDMaskBoxs>
+<GLDMaskBoxes>
     <GLDMaskBox id = "M1">
         <tip>
             <hint  width="305"  height="511" normalimage=":/image/target.png"/>
@@ -26,4 +26,4 @@
             <next  X="295" Y="446" width="128" height="38" normalimage=":/image/try-normal.png"   hoverimage=":/image/try-hover.png"   pressedimage=":/image/try-pressed.png"/>
         </tip>
     </GLDMaskBox>
-</GLDMaskBoxs>
+</GLDMaskBoxes>

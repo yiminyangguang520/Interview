@@ -14,12 +14,12 @@ namespace GlodonMask
 
     struct GLDTipInfoItem
     {
-        GLDTipInfoItem(int width = -1, int height = -1, int leftXPos = -1, int leftYPos = -1,
+        GLDTipInfoItem(int width = -1, int height = -1, int X = -1, int Y = -1,
                        QString normalImage = "", QString hoverImage = "", QString pressedImage = "")
             : m_width(width)
             , m_height(height)
-            , m_leftXPos(leftXPos)
-            , m_leftYPos(leftYPos)
+            , m_xPos(X)
+            , m_yPos(Y)
             , m_normalImage(normalImage)
             , m_hoverImage(hoverImage)
             , m_pressedImage(pressedImage)
@@ -29,8 +29,8 @@ namespace GlodonMask
 
         int m_width;               // 图片宽度
         int m_height;              // 图片高度
-        int m_leftXPos;            // 左上角X坐标
-        int m_leftYPos;            // 左上角Y坐标
+        int m_xPos;            // 左上角X坐标
+        int m_yPos;            // 左上角Y坐标
 
         QString m_normalImage;     // 正常情况下图片
         QString m_hoverImage;      // 鼠标划过时效果

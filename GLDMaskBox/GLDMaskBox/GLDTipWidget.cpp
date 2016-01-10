@@ -95,10 +95,10 @@ namespace GlodonMask
                 guideInfo.m_closeButtonItem.m_height);
         }
 
-        if (guideInfo.m_closeButtonItem.m_leftXPos != -1 && guideInfo.m_closeButtonItem.m_leftYPos != -1)
+        if (guideInfo.m_closeButtonItem.m_xPos != -1 && guideInfo.m_closeButtonItem.m_yPos != -1)
         {
-            m_pCloseButton->move(guideInfo.m_closeButtonItem.m_leftXPos,
-                guideInfo.m_closeButtonItem.m_leftYPos);
+            m_pCloseButton->move(guideInfo.m_closeButtonItem.m_xPos,
+                guideInfo.m_closeButtonItem.m_yPos);
         }
     }
 
@@ -116,10 +116,10 @@ namespace GlodonMask
                 guideInfo.m_nextButtonItem.m_height);
         }
 
-        if (guideInfo.m_nextButtonItem.m_leftXPos != -1 && guideInfo.m_nextButtonItem.m_leftYPos != -1)
+        if (guideInfo.m_nextButtonItem.m_xPos != -1 && guideInfo.m_nextButtonItem.m_yPos != -1)
         {
-            m_pNextButton->move(guideInfo.m_nextButtonItem.m_leftXPos,
-                guideInfo.m_nextButtonItem.m_leftYPos);
+            m_pNextButton->move(guideInfo.m_nextButtonItem.m_xPos,
+                guideInfo.m_nextButtonItem.m_yPos);
         }
     }
 
