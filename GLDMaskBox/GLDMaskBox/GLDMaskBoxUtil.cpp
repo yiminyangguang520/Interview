@@ -23,7 +23,7 @@ namespace GlodonMask
 
     bool WINAPI unInitialize()
     {
-        assert(!g_GLDMaskBoxInfo);
+        assert(g_GLDMaskBoxInfo);
         g_GLDMaskBoxInfo->writeMaskBoxIDToFile();
         return true;
     }
@@ -31,31 +31,31 @@ namespace GlodonMask
     STATUS WINAPI showMasks(const QString& id, QList<QWidget*> &wgtList)
     {
         // todo ·µ»Ø×´Ì¬Âë
-        assert(!g_GLDMaskBoxInfo);
+        assert(g_GLDMaskBoxInfo);
         return g_GLDMaskBoxInfo->showMasks(id, wgtList);
     }
 
     STATUS WINAPI showMasks(const QString& id, QList<QAction*> &wgtList)
     {
-        assert(!g_GLDMaskBoxInfo);
+        assert(g_GLDMaskBoxInfo);
         return g_GLDMaskBoxInfo->showMasks(id, wgtList);
     }
 
     bool WINAPI setMaskBoxColor(const QString & id, GLDMask::MASKCOLOR color)
     {
-        assert(!g_GLDMaskBoxInfo);
+        assert(g_GLDMaskBoxInfo);
         return g_GLDMaskBoxInfo->setMaskBoxColor(id, color);
     }
 
     bool WINAPI setMaskBoxArrowColor(const QString& id, const QColor& color)
     {
-        assert(!g_GLDMaskBoxInfo);
+        assert(g_GLDMaskBoxInfo);
         return g_GLDMaskBoxInfo->setMaskBoxArrowColor(id, color);
     }
 
     bool WINAPI setMaskArrowLineWidth(const QString& id, const int lineWidth)
     {
-        assert(!g_GLDMaskBoxInfo);
+        assert(g_GLDMaskBoxInfo);
         return g_GLDMaskBoxInfo->setMaskArrowLineWidth(id, lineWidth);
     }
 }
