@@ -51,7 +51,7 @@ namespace GlodonMask
          * @param id         GLDMaskBox ID,与xml文件中MaskBox节点ID一致
          * @param lineWidth  线条宽度
          */
-        bool setMaskArrowLineWidth(const QString& id, const int lineWidth);
+        bool setMaskBoxArrowLineWidth(const QString& id, const int lineWidth);
 
         /**
          * @brief 将已经显示过的蒙版所在的GLDMaskBox的ID写入到文件

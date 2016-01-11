@@ -56,6 +56,6 @@ namespace GlodonMask
     bool WINAPI setMaskArrowLineWidth(const QString& id, const int lineWidth)
     {
         assert(g_GLDMaskBoxInfo);
-        return g_GLDMaskBoxInfo->setMaskArrowLineWidth(id, lineWidth);
+        return g_GLDMaskBoxInfo->setMaskBoxArrowLineWidth(id, lineWidth);
     }
 }

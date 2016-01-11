@@ -370,7 +370,7 @@ namespace GlodonMask
         return false;
     }
 
-    bool GLDMaskBoxInfo::setMaskArrowLineWidth(const QString& id, const int lineWidth)
+    bool GLDMaskBoxInfo::setMaskBoxArrowLineWidth(const QString& id, const int lineWidth)
     {
         GLDMaskBox* pMaskBox = d->m_maskBoxHash.value(id);
 
