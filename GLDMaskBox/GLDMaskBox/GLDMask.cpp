@@ -35,7 +35,7 @@ namespace GlodonMask
         , m_pGLDProxyWidget(nullptr)
         , m_bIsShown(false)
     {
-        if (index == 0)
+        if (index == 1)
         {
             m_pGLDProxyWidget = new GLDProxyWidget(pWgt);
         }

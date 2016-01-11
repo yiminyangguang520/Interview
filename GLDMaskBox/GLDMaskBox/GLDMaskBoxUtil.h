@@ -17,18 +17,25 @@ namespace GlodonMask
     /**
     * @brief 创建并显示蒙版
     * @param id         GLDMaskBox ID,与xml文件中MaskBox节点ID一致
-    * @param wgtList    需要显示蒙版的widget,widget添加的顺序需与xml中tip节点顺序一致,否则显示结果不对应
-    * @return           显示成功返回SUCESS,否则返回FAILURE
+    * @param wgtList    需要显示蒙版的widget,其中key为xml文件中tip节点的step属性的值,step需按顺序从1开始编号;value为QWidget*
+    * @return           显示成功返回SUCESS;xml文件中ID为id的GLDMaskBox下的tip节点个数与wgtHash个数不一致,返回UNMATCHED;否则返回FAILURE
     */
-    GLDMASKBOX_EXPORT STATUS WINAPI showMasks(const QString& id, QList<QWidget*> &wgtList);
+    GLDMASKBOX_EXPORT STATUS WINAPI showMasks(const QString& id, QHash<int, QWidget*> &wgtHash);
 
     /**
     * @brief 创建并显示蒙版
     * @param id         GLDMaskBox ID,与xml文件中MaskBox节点ID一致
-    * @param wgtList    需要显示蒙版的QAction,QAction添加的顺序需与xml中tip节点顺序一致,否则显示结果不对应
-    * @return           显示成功返回SUCESS,否则返回FAILURE
+    * @param wgtList    需要显示蒙版的QAction,其中key为xml文件中tip节点的step属性的值,step需按顺序从1开始编号;value为QAction*
+    * @return           显示成功返回SUCESS;xml文件中ID为id的GLDMaskBox下的tip节点个数与wgtHash个数不一致,返回UNMATCHED;否则返回FAILURE
     */
-    GLDMASKBOX_EXPORT STATUS WINAPI showMasks(const QString& id, QList<QAction*> &actList);
+    GLDMASKBOX_EXPORT STATUS WINAPI showMasks(const QString& id, QHash<int, QAction*> &actHash);
+
+    /**
+    * @brief 蒙版是否显示过
+    * @param id         GLDMaskBox ID,与xml文件中MaskBox节点ID一致
+    * @return           显示过则返回true,否则返回false
+    */
+    GLDMASKBOX_EXPORT bool WINAPI isShown(const QString& id);
 
     /**
     * @brief 为MaskBox中的Mask设置蒙版颜色
@@ -52,7 +59,7 @@ namespace GlodonMask
     * @param lineWidth  线宽
     * @return           设置成功返回true,否则返回false
     */
-    GLDMASKBOX_EXPORT bool WINAPI setMaskArrowLineWidth(const QString& id, const int lineWidth);
+    GLDMASKBOX_EXPORT bool WINAPI setMaskBoxArrowLineWidth(const QString& id, const int lineWidth);
 
     /**
     * @brief  进行持久化操作,在应用程序关闭后调用

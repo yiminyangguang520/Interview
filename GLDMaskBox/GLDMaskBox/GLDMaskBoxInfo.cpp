@@ -92,6 +92,11 @@ namespace GlodonMask
             {
                 GLDTipInfo guideInfo;
 
+                if (tipList.at(i).toElement().hasAttribute("step"))
+                {
+                    guideInfo.m_name = tipList.at(i).toElement().attribute("step").toInt();
+                }
+
                 QDomElement tipDom = tipList.at(i).firstChildElement();
                 while (!tipDom.isNull())
                 {
@@ -195,13 +200,14 @@ namespace GlodonMask
         * @param wgtList
         */
         // todo
-        QList<QWidget*> menuToAssociatedWgt(QList<QWidget*> & wgtList)
+        QHash<int, QWidget*> menuToAssociatedWgt(QHash<int, QWidget*> &wgtHash)
         {
-            QList<QWidget*> associatedWgtList;
+            QHash<int, QWidget*> associatedWgtHash;
 
-            for (int index = 0; index < wgtList.count(); ++index)
+            QHash<int, QWidget*>::iterator iter = wgtHash.begin();
+            for (; iter != wgtHash.end(); ++iter)
             {
-                QWidget* widget = wgtList[index];
+                QWidget* widget = iter.value();
 
                 if (!widget)
                 {
@@ -219,37 +225,38 @@ namespace GlodonMask
                     }
                 }
 
-                associatedWgtList.append(widget);
+                associatedWgtHash.insert(iter.key(), widget);
             }
 
-            return associatedWgtList;
+            return associatedWgtHash;
         }
 
         /**
         * @brief 将action相关的ToolButton形式的widget添加到list中
         * @return
         */
-        QList<QWidget*> actionToAssociatedWgt(QList<QAction*> & actList)
+        QHash<int, QWidget *> actionToAssociatedWgt(QHash<int, QAction*> & actHash)
         {
-            QList<QWidget *> wgtList;
+            QHash<int, QWidget *> wgtHash;
 
-            foreach(QAction* pAct, actList)
+            QHash<int, QAction*>::iterator iter = actHash.begin();
+            for (; iter != actHash.end(); ++iter)
             {
-                if (!pAct)
+                if (!iter.value())
                 {
                     break;
                 }
 
-                foreach(QWidget* pWidget, pAct->associatedWidgets())
+                foreach(QWidget* pWidget, iter.value()->associatedWidgets())
                 {
                     if (QToolButton* pToolButton = dynamic_cast<QToolButton*>(pWidget))
                     {
-                        wgtList.append(pToolButton);
+                        wgtHash.insert(iter.key(), pToolButton);
                     }
                 }
             }
 
-            return wgtList;
+            return wgtHash;
         }
 
         /**
@@ -257,14 +264,14 @@ namespace GlodonMask
         * @param id
         * @param wgtList
         */
-        STATUS setWidgets(const QString& id, QList<QWidget*> &wgtList)
+        STATUS setWidgets(const QString& id, QHash<int, QWidget*> &wgtHash)
         {
             // todo
             QHash<QString, GLDMaskBox*>::iterator iter = m_maskBoxHash.find(id);
 
             if ((*iter))
             {
-                return (*iter)->setMaskedWgts(wgtList);
+                return (*iter)->setMaskedWgts(wgtHash);
             }
 
             return FAILURE;
@@ -273,11 +280,15 @@ namespace GlodonMask
         /**
         * @brief 将已经显示过的Mask所在的GLDMaskBox的ID写入到文件
         */
-        void writeMaskBoxIDToFile(const QString& iniPath = g_iniPath)
+        bool writeMaskBoxIDToFile(const QString& iniPath = g_iniPath)
         {
             QFile file(iniPath);
 
-            if (file.open(QIODevice::WriteOnly | QIODevice::Append))
+            if (!file.open(QIODevice::WriteOnly | QIODevice::Append))
+            {
+                return false;
+            }
+            else
             {
                 QTextStream in(&file);
 
@@ -293,6 +304,8 @@ namespace GlodonMask
             }
 
             file.close();
+
+            return true;
         }
 
         QHash<QString, GLDMaskBox*> m_maskBoxHash;
@@ -313,32 +326,32 @@ namespace GlodonMask
 
     }
 
-    STATUS GLDMaskBoxInfo::showMasks(const QString& id, QList<QWidget*> &wgtList)
+    STATUS GLDMaskBoxInfo::showMasks(const QString& id, QHash<int, QWidget*> &wgtHash)
     {
         // todo 返回状态码
         if (d->m_maskBoxHash.keys().contains(id))
         {
-            QList<QWidget*> associatedWgtList = d->menuToAssociatedWgt(wgtList);
-            return d->setWidgets(id, associatedWgtList);
+            QHash<int, QWidget*> associatedWgtHash = d->menuToAssociatedWgt(wgtHash);
+            return d->setWidgets(id, associatedWgtHash);
         }
 
         return FAILURE;
     }
 
-    STATUS GLDMaskBoxInfo::showMasks(const QString& id, QList<QAction*> &actList)
+    STATUS GLDMaskBoxInfo::showMasks(const QString& id, QHash<int, QAction*> &actHash)
     {
         if (d->m_maskBoxHash.keys().contains(id))
         {
-            QList<QWidget*> associatedWgtList = d->actionToAssociatedWgt(actList);
-            return d->setWidgets(id, associatedWgtList);
+            QHash<int, QWidget*> associatedWgtHash = d->actionToAssociatedWgt(actHash);
+            return d->setWidgets(id, associatedWgtHash);
         }
 
         return FAILURE;
     }
 
-    void GLDMaskBoxInfo::writeMaskBoxIDToFile()
+    bool GLDMaskBoxInfo::writeMaskBoxIDToFile()
     {
-        d->writeMaskBoxIDToFile();
+        return d->writeMaskBoxIDToFile();
     }
 
     bool GLDMaskBoxInfo::setMaskBoxColor(const QString& id, GLDMask::MASKCOLOR color)
@@ -379,6 +392,18 @@ namespace GlodonMask
             pMaskBox->setMaskArrowLineWidth(lineWidth);
 
             return true;
+        }
+
+        return false;
+    }
+
+    bool GLDMaskBoxInfo::isShown(const QString& id)
+    {
+        GLDMaskBox* pMaskBox = d->m_maskBoxHash.value(id);
+
+        if (pMaskBox)
+        {
+            return pMaskBox->isMaskBoxShown();
         }
 
         return false;

@@ -57,6 +57,7 @@ namespace GlodonMask
         GLDTipInfoItem m_maskWidgetItem;    // 提示信息
         GLDTipInfoItem m_nextButtonItem;    // 下一步
         GLDTipInfoItem m_closeButtonItem;   // 关闭
+        int            m_name;              // 提示信息顺序
     };
 
 
@@ -70,7 +71,6 @@ namespace GlodonMask
                               NEXTCLICKEDCALLBACK goCallBack = nullptr,
                               QWidget * parent = 0);
         ~GLDTipWidget();
-
 
     private:
         /**

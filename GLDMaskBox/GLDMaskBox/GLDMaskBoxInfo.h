@@ -21,16 +21,22 @@ namespace GlodonMask
         /**
          * @brief 创建并显示蒙版
          * @param id        GLDMaskBox ID,与xml文件中MaskBox节点ID一致
-         * @param wgtList   需要显示蒙版的widget
+         * @param wgtHash   需要显示蒙版的widget,其中key为xml文件中tip节点的step属性的值,step需按顺序从1开始编号;value为QWidget*
          */
-        STATUS showMasks(const QString& id, QList<QWidget*> &wgtList);
+        STATUS showMasks(const QString& id, QHash<int, QWidget*> &wgtHash);
 
         /**
          * @brief 创建并显示蒙版
          * @param id        GLDMaskBox ID,与xml文件中MaskBox节点ID一致
-         * @param actList   需要显示蒙版的action
+         * @param actHash   需要显示蒙版的action,其中key为xml文件中tip节点的step属性的值,step需按顺序从1开始编号;value为QAction*
          */
-        STATUS showMasks(const QString& id, QList<QAction*> &actList);
+        STATUS showMasks(const QString& id, QHash<int, QAction*> &actHash);
+
+        /**
+        * @brief 蒙版是否已经显示过
+        * @param id        GLDMaskBox ID,与xml文件中MaskBox节点ID一致
+        */
+        bool isShown(const QString& id);
 
         /**
          * @brief 设置蒙版颜色
@@ -56,7 +62,7 @@ namespace GlodonMask
         /**
          * @brief 将已经显示过的蒙版所在的GLDMaskBox的ID写入到文件
          */
-        void writeMaskBoxIDToFile();
+        bool writeMaskBoxIDToFile();
 
     private:
         class InnerMaskBoxInfoImpl;

@@ -15,7 +15,7 @@ namespace GlodonMask
             foreach(GLDTipInfo guideInfo, guideInfoList)
             {
                 NEXTCLICKEDCALLBACK next = std::bind(&GLDMaskBox::InnerMaskBoxImpl::onNextBtnClicked, this);
-                m_tipWgtList.append(new GLDTipWidget(guideInfo, next));
+                m_tipHash.insert(guideInfo.m_name, new GLDTipWidget(guideInfo, next));
             }
         }
 
@@ -47,11 +47,11 @@ namespace GlodonMask
         }
 
 
-        int                     m_step;           // 第几个蒙版
-        QString                 m_maskBoxID;      // maskBox的ID
-        bool                    m_bIsShown;       // MaskBox里的Mask是否已显示过
-        QList<GLDTipWidget*>    m_tipWgtList;     // MaskBox里的提示信息列表
-        QList<GLDMask*>         m_maskList;       // 蒙版列表
+        int                              m_step;           // 第几个蒙版
+        QString                          m_maskBoxID;      // maskBox的ID
+        bool                             m_bIsShown;       // MaskBox里的Mask是否已显示过
+        QHash<int, GLDTipWidget*>        m_tipHash;      // MaskBox里的提示信息列表
+        QList<GLDMask*>                  m_maskList;       // 蒙版列表
 
     private:
         Q_DISABLE_COPY(InnerMaskBoxImpl)
@@ -71,22 +71,31 @@ namespace GlodonMask
 
     }
 
-    STATUS GLDMaskBox::setMaskedWgts(QList<QWidget*> & wgtList)
+    STATUS GLDMaskBox::setMaskedWgts(QHash<int, QWidget*> & wgtHash)
     {
-        if (wgtList.size() != d->m_tipWgtList.size())
+        QList<QWidget*> wgtList = wgtHash.values();
+
+        if (wgtList.size() != d->m_tipHash.size())
         {
-            return FAILURE;
+            return UNMATCHED;
         }
 
         GLDMask* pMask = nullptr;
 
-        for (int index = 0; index < wgtList.count(); ++index)
+        QHash<int, QWidget*>::iterator iter = wgtHash.begin();
+        for (; iter != wgtHash.end(); ++iter)
         {
-            pMask = new GLDMask(wgtList[index], d->m_tipWgtList[index], index, topLevelParentWidget(wgtList[index]));
-            pMask->hide();
+            QWidget* pWgt = wgtHash.value(iter.key());
+            GLDTipWidget* pTipWgt = d->m_tipHash.value(iter.key());
 
-            d->m_maskList.append(pMask);
-            connect(pMask, &GLDMask::alreadyShow, this, &GLDMaskBox::setAllMaskIsShown);
+            if (pWgt && pTipWgt)
+            {
+                pMask = new GLDMask(pWgt, pTipWgt, iter.key(), topLevelParentWidget(pWgt));
+                pMask->hide();
+
+                d->m_maskList.append(pMask);
+                connect(pMask, &GLDMask::alreadyShow, this, &GLDMaskBox::setAllMaskIsShown);
+            }
         }
 
         return SUCCESS;

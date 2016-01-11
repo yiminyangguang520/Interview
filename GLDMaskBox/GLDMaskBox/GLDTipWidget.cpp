@@ -9,7 +9,6 @@ namespace GlodonMask
         , m_pNextButton(nullptr)
         , m_pCloseButton(nullptr)
         , m_goCallBack(goCallBack)
-
     {
         setAttribute(Qt::WA_NoSystemBackground);
         setAttribute(Qt::WA_TranslucentBackground);
